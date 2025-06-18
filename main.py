@@ -42,9 +42,189 @@ class JournalScraper:
         self.session = self.scraper
         self.articles_data = []
 
+    def handle_checkbox_verification(self, response, url):
+        """
+        Handle checkbox verification challenges specifically
+        """
+        soup = BeautifulSoup(response.content, "html.parser")
+
+        # Look for checkbox verification forms
+        checkboxes = soup.find_all("input", {"type": "checkbox"})
+        verification_forms = soup.find_all("form")
+
+        # Check for checkbox verification indicators
+        checkbox_indicators = [
+            "i am not a robot",
+            "verify you are human",
+            "check the box",
+            "tick the checkbox",
+            "human verification",
+            "security check",
+        ]
+
+        page_text = soup.get_text().lower()
+        has_checkbox_verification = any(
+            indicator in page_text for indicator in checkbox_indicators
+        )
+
+        if has_checkbox_verification or checkboxes:
+            print(f"☑️  Checkbox verification detected on {url}")
+            print("📋 Checkbox verification detected!")
+
+            # Try to find and analyze the verification form
+            for form in verification_forms:
+                form_text = form.get_text().lower()
+                if any(indicator in form_text for indicator in checkbox_indicators):
+                    print(
+                        f"🔍 Found verification form: {form.get('action', 'No action')}"
+                    )
+
+                    # Look for hidden fields or tokens
+                    hidden_inputs = form.find_all("input", {"type": "hidden"})
+                    if hidden_inputs:
+                        print(f"🔐 Found {len(hidden_inputs)} hidden form fields")
+
+                    # Try to extract form data
+                    form_data = {}
+                    for input_field in form.find_all("input"):
+                        name = input_field.get("name")
+                        value = input_field.get("value", "")
+                        input_type = input_field.get("type", "text")
+
+                        if name:
+                            if input_type == "checkbox":
+                                # Set checkbox as checked
+                                form_data[name] = "on" if not value else value
+                                print(f"☑️  Checkbox field: {name} = on")
+                            elif input_type == "hidden":
+                                form_data[name] = value
+                                print(f"🔐 Hidden field: {name} = {value[:20]}...")
+                            else:
+                                form_data[name] = value
+
+                    # Try to submit the form automatically
+                    form_action = form.get("action")
+                    form_method = form.get("method", "post").lower()
+
+                    if form_action:
+                        submit_url = urljoin(url, form_action)
+                        print(f"🚀 Attempting to submit form to: {submit_url}")
+
+                        try:
+                            if form_method == "post":
+                                submit_response = self.session.post(
+                                    submit_url, data=form_data
+                                )
+                            else:
+                                submit_response = self.session.get(
+                                    submit_url, params=form_data
+                                )
+
+                            if not self.is_verification_page(submit_response):
+                                print("✅ Checkbox verification passed automatically!")
+                                return submit_response
+                            else:
+                                print(
+                                    "⚠️  Automatic submission failed, trying manual approach..."
+                                )
+                        except Exception as e:
+                            print(f"❌ Form submission error: {e}")
+
+            # Fallback to manual intervention
+            return self.manual_verification_handler(url)
+
+        return response
+
+    def manual_verification_handler(self, url):
+        """
+        Handle manual verification with guided instructions
+        """
+        print("\n" + "=" * 60)
+        print("🚨 MANUAL VERIFICATION REQUIRED")
+        print("=" * 60)
+        print(f"🌐 URL: {url}")
+        print("\n📋 INSTRUCTIONS:")
+        print("1. Open the URL above in your browser")
+        print("2. Complete the checkbox verification (tick the box)")
+        print("3. Wait for the page to load completely")
+        print("4. Copy any cookies if prompted")
+        print("5. Come back here and press Enter")
+        print("\n⏳ The script will wait for you...")
+        print("-" * 60)
+
+        input("✅ Press Enter after completing the checkbox verification...")
+
+        # After manual verification, try to continue with the session
+        print("🔄 Attempting to continue with updated session...")
+
+        # Try to access the page again
+        try:
+            response = self.session.get(url)
+            if not self.is_verification_page(response):
+                print("✅ Manual verification successful!")
+                return response
+            else:
+                print("⚠️  Still showing verification page...")
+
+                # Offer cookie/session transfer option
+                print("\n🍪 If verification persists, you can:")
+                print("1. Copy browser cookies to this session")
+                print("2. Try a different approach")
+
+                choice = input(
+                    "Enter 'cookies' to transfer cookies, or 'continue' to proceed anyway: "
+                ).lower()
+
+                if choice == "cookies":
+                    return self.handle_cookie_transfer(url)
+                else:
+                    return response
+
+        except Exception as e:
+            print(f"❌ Error after manual verification: {e}")
+            return None
+
+    def handle_cookie_transfer(self, url):
+        """
+        Guide user through cookie transfer process
+        """
+        print("\n🍪 COOKIE TRANSFER GUIDE:")
+        print("-" * 40)
+        print("1. In your browser, press F12 (Developer Tools)")
+        print("2. Go to Application/Storage tab")
+        print("3. Click on 'Cookies' in the left panel")
+        print("4. Find the domain cookies and copy them")
+        print("5. Paste them below (format: name=value)")
+        print("\nExample: session_id=abc123; csrf_token=xyz789")
+        print("\nEnter cookies (or press Enter to skip):")
+
+        cookie_input = input().strip()
+
+        if cookie_input:
+            # Parse and add cookies to session
+            try:
+                cookie_pairs = cookie_input.split(";")
+                for pair in cookie_pairs:
+                    if "=" in pair:
+                        name, value = pair.split("=", 1)
+                        self.session.cookies.set(name.strip(), value.strip())
+                        print(f"🍪 Added cookie: {name.strip()}")
+
+                print("✅ Cookies added to session")
+
+                # Try accessing the page again
+                response = self.session.get(url)
+                return response
+
+            except Exception as e:
+                print(f"❌ Error processing cookies: {e}")
+
+        print("⏭️  Continuing without cookies...")
+        return self.session.get(url)
+
     def handle_verification_challenge(self, response, url):
         """
-        Handle various verification challenges
+        Enhanced verification handler with checkbox support
         """
         soup = BeautifulSoup(response.content, "html.parser")
 
@@ -57,36 +237,35 @@ class JournalScraper:
             "robot",
             "security check",
             "please verify",
+            "checkbox",
+            "tick",
+            "check the box",
+            "i am not a robot",
         ]
 
         page_text = soup.get_text().lower()
 
         if any(indicator in page_text for indicator in verification_indicators):
             print(f"⚠️  Human verification detected on {url}")
-            print("💡 Verification handling options:")
-            print("1. Manual intervention required")
-            print("2. Waiting for automatic resolution...")
+
+            # First try checkbox-specific handling
+            checkbox_response = self.handle_checkbox_verification(response, url)
+            if checkbox_response != response:
+                return checkbox_response
 
             # Strategy 1: Wait and retry with longer delays
-            for attempt in range(3):
-                print(f"🔄 Retry attempt {attempt + 1}/3...")
-                time.sleep(10 + (attempt * 5))  # Progressive delay
+            print("🔄 Trying automatic resolution...")
+            for attempt in range(2):
+                print(f"⏳ Waiting attempt {attempt + 1}/2...")
+                time.sleep(15 + (attempt * 10))  # Progressive delay
 
                 retry_response = self.session.get(url)
-                if self.is_verification_page(retry_response):
-                    continue
-                else:
+                if not self.is_verification_page(retry_response):
                     print("✅ Verification passed automatically!")
                     return retry_response
 
             # Strategy 2: Manual intervention
-            print("\n🚨 Manual intervention required!")
-            print(f"Please open this URL in your browser: {url}")
-            print("Complete the verification, then press Enter to continue...")
-            input("Press Enter after completing verification...")
-
-            # Try again after manual intervention
-            return self.session.get(url)
+            return self.manual_verification_handler(url)
 
         return response
 
@@ -110,6 +289,10 @@ class JournalScraper:
             "challenge",
             "robot",
             "automated",
+            "checkbox",
+            "i am not a robot",
+            "tick the box",
+            "check the box",
         ]
 
         return any(keyword in page_text for keyword in verification_keywords)
