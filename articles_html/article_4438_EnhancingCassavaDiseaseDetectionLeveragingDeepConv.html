@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en-US" xml:lang="en-US">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
+		Enhancing Cassava Disease Detection: Leveraging Deep Convolutional Neural Networks and Data Augmentation for Accurate Diagnosis
+							| International Journal of Experimental Research and Review
+			</title>
+
+	
+<link rel="icon" href="https://qtanalytics.in/journals/public/journals/5/favicon_en_US.png">
+<meta name="generator" content="Open Journal Systems 3.3.0.19">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PNB5RMDB43"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PNB5RMDB43');
+</script>
+<meta name="gs_meta_revision" content="1.1"/>
+<meta name="citation_journal_title" content="International Journal of Experimental Research and Review"/>
+<meta name="citation_journal_abbrev" content="IJERR"/>
+<meta name="citation_issn" content="2455-4855"/> 
+<meta name="citation_author" content="Poonam Chaudhary"/>
+<meta name="citation_author_institution" content="Data Science Lead, CSE Department, The NorthCap University, Gurugram, India"/>
+<meta name="citation_author" content="Monika Lamba"/>
+<meta name="citation_author_institution" content="Data Science Lead, CSE Department, The NorthCap University, Gurugram, India"/>
+<meta name="citation_author" content="Sneha Kandacharam"/>
+<meta name="citation_author_institution" content="Data Science Lead, CSE Department, The NorthCap University, Gurugram, India"/>
+<meta name="citation_title" content="Enhancing Cassava Disease Detection: Leveraging Deep Convolutional Neural Networks and Data Augmentation for Accurate Diagnosis"/>
+<meta name="citation_language" content="en"/>
+<meta name="citation_date" content="2025/04/30"/>
+<meta name="citation_volume" content="47"/>
+<meta name="citation_firstpage" content="93"/>
+<meta name="citation_lastpage" content="107"/>
+<meta name="citation_doi" content="10.52756/ijerr.2025.v47.008"/>
+<meta name="citation_abstract_html_url" content="https://qtanalytics.in/journals/index.php/IJERR/article/view/4438"/>
+<meta name="citation_keywords" xml:lang="en" content="Cassava disease detection"/>
+<meta name="citation_keywords" xml:lang="en" content="Deep learning architectures"/>
+<meta name="citation_keywords" xml:lang="en" content="Efficient Net"/>
+<meta name="citation_keywords" xml:lang="en" content="Disease surveillance"/>
+<meta name="citation_pdf_url" content="https://qtanalytics.in/journals/index.php/IJERR/article/download/4438/2517"/>
+<meta name="citation_reference" content="Akash, F. R., Priniya, A. A., Chadni, J. S., Shuha, J. A., Emu, I. A., Reza, A. W., &amp; Arefin, M. S. (2023). Deep Learning Approach for COVID-19 Detection: A Diagnostic Tool Based on VGG16 and VGG19. Intelligent Computing and Optimization, 394–403."/>
+<meta name="citation_reference" content="https://doi.org/10.1007/978-3-031-50158-6_39"/>
+<meta name="citation_reference" content="Albattah, W., Nawaz, M., Javed, A., Masood, M., &amp; Albahli, S. (2021). A novel deep learning method for detection and classification of plant diseases. Complex &amp; Intelligent Systems, 8(1), 507–524. https://doi.org/10.1007/s40747-021-00536-1"/>
+<meta name="citation_reference" content="Aruna, R., Prabu, M., Ananthi, S., Bharathi, V. C., Sathya, R., &amp; Suchithra, B. (2023). Vision based Cassava Plant Leaf Disease Classification using Machine Learning Techniques. 2nd International Conference on Automation, Computing and Renewable Systems (ICACRS), 959–964. https://doi.org/10.1109/icacrs58579.2023.10404468"/>
+<meta name="citation_reference" content="Azeta, A., Jonathan, K., Guembe, B., &amp; Nwadoziokwu, E. (2023). A Deep Learning Approach for Cassava Leaf Disease Diagnosis. SSRN Electronic Journal. https://doi.org/10.2139/ssrn.4669543"/>
+<meta name="citation_reference" content="Deep Convolution Neural Network Based solution for Detecting Plant Diseases. (2022). Journal of Pharmaceutical Negative Results, 13(S01). https://doi.org/10.47750/pnr.2022.13.s01.57"/>
+<meta name="citation_reference" content="Demilie, W. B. (2024). Plant disease detection and classification techniques: a comparative study of the performances. Journal of Big Data, 11(1). https://doi.org/10.1186/s40537-023-00863-9"/>
+<meta name="citation_reference" content="Emmanuel, A., Mwangi, R. W., Murithi, P., Fredrick, K., &amp; Danison, T. (2023). Classification of cassava leaf diseases using deep Gaussian transfer learning model. Engineering Reports, 5(9). Portico. https://doi.org/10.1002/eng2.12651"/>
+<meta name="citation_reference" content="Jayaprakash, K., &amp; Balamurugan, S. P. (2020). Analysis of Plant Disease Detection and Classification Models: A Computer Vision Perspective. Journal of Computational and Theoretical Nanoscience, 17(12), 5422–5428. https://doi.org/10.1166/jctn.2020.9435"/>
+<meta name="citation_reference" content="Kumar, A., Singh, S., Gaurav, A. K., Srivastava, S., &amp; Verma, J. P. (2020). Plant Growth-Promoting Bacteria: Biological Tools for the Mitigation of Salinity Stress in Plants. Frontiers in Microbiology, 11. https://doi.org/10.3389/fmicb.2020.01216"/>
+<meta name="citation_reference" content="LeCun, Y., Bengio, Y., &amp; Hinton, G. (2015). Deep learning. Nature, 521(7553), 436–444. https://doi.org/10.1038/nature14539"/>
+<meta name="citation_reference" content="Li, R., Chen, S., Matsumoto, H., Gouda, M., Gafforov, Y., Wang, M., &amp; Liu, Y. (2023). Predicting rice diseases using advanced technologies at different scales: present status and future perspectives. Abiotech., 4(4), 359–371. https://doi.org/10.1007/s42994-023-00126-4"/>
+<meta name="citation_reference" content="Liang, C., Amelung, W., Lehmann, J., &amp; Kästner, M. (2019). Quantitative assessment of microbial necromass contribution to soil organic matter. Global Change Biology, 25(11), 3578–3590. Portico. https://doi.org/10.1111/gcb.14781"/>
+<meta name="citation_reference" content="Mohanty, S. P., Hughes, D. P., &amp; Salathé, M. (2016). Using Deep Learning for Image-Based Plant Disease Detection. Frontiers in Plant Science, 7. https://doi.org/10.3389/fpls.2016.01419"/>
+<meta name="citation_reference" content="Mohanty, S. P., Hughes, D. P., &amp; Salathé, M. (2016). Using Deep Learning for Image-Based Plant Disease Detection. Frontiers in Plant Science, 7. https://doi.org/10.3389/fpls.2016.01419"/>
+<meta name="citation_reference" content="Pathak, Y., Shukla, P. K., Tiwari, A., Stalin, S., Singh, S., &amp; Shukla, P. K. (2022). Deep Transfer Learning Based Classification Model for COVID-19 Disease. IRBM, 43(2), 87–92. https://doi.org/10.1016/j.irbm.2020.05.003"/>
+<meta name="citation_reference" content="Prasad, P., &amp; Agniraj, S. (2024). Cross-Domain Adaptation Techniques for Robust Plant Disease Detection: A DANN-CORAL Hybrid Approach. International Journal of Experimental Research and Review, 42, 68-84. https://doi.org/10.52756/ijerr.2024.v42.007"/>
+<meta name="citation_reference" content="Reichstein, M., Camps-Valls, G., Stevens, B., Jung, M., Denzler, J., Carvalhais, N., &amp; Prabhat. (2019). Deep learning and process understanding for data-driven Earth system science. Nature, 566(7743), 195–204. https://doi.org/10.1038/s41586-019-0912-1"/>
+<meta name="citation_reference" content="Shruthi, U., Nagaveni, V., &amp; Raghavendra, B. K. (2019). A Review on Machine Learning Classification Techniques for Plant Disease Detection. 5th International Conference on Advanced Computing &amp; Communication Systems (ICACCS), 281–284."/>
+<meta name="citation_reference" content="https://doi.org/10.1109/icaccs.2019.8728415"/>
+<meta name="citation_reference" content="Shukla, S., Upadhyay, D., Mishra, A., Jindal, T., &amp; Shukla, K. (2022). Challenges Faced by Farmers in Crops Production Due to Fungal Pathogens and Their Effect on Indian Economy. Fungal Diversity, Ecology and Control Management, 495–505. https://doi.org/10.1007/978-981-16-8877-5_24"/>
+<meta name="citation_reference" content="Thakur, P. S., Khanna, P., Sheorey, T., &amp; Ojha, A. (2022). Trends in vision-based machine learning techniques for plant disease identification: A systematic review. Expert Systems with Applications, 208, 118117."/>
+<meta name="citation_reference" content="https://doi.org/10.1016/j.eswa.2022.118117Uke, A., Tokunaga, H., Utsumi, Y., Vu, N. A., Nhan, P. T., Srean, P., Hy, N. H., Ham, L. H., Lopez-Lavalle, L. A. B., Ishitani, M., Hung, N., Tuan, L. N., Van Hong, N., Huy, N. Q., Hoat, T. X., Takasu, K., Seki, M., &amp; Ugaki, M. (2021). Cassava mosaic disease and its management in Southeast Asia. Plant Molecular Biology, 109(3), 301–311. https://doi.org/10.1007/s11103-021-01168-2"/>
+<meta name="citation_reference" content="Upadhyay, S., Jain, J., &amp; Prasad, R. (2024). Early Blight and Late Blight Disease Detection in Potato Using Efficientnetb0. International Journal of Experimental Research and Review, 38, 15-25. https://doi.org/10.52756/ijerr.2024.v38.002"/>
+<meta name="citation_reference" content="Vardhan, J.V., &amp; Swetha, K.S. (2023). Detection of healthy and diseased crops in drone captured images using Deep Learning. ArXiv, abs/2305.13490."/>
+<meta name="citation_reference" content="Wu, S. Z., Al-Eryani, G., Roden, D. L., Junankar, S., Harvey, K., Andersson, A., Thennavan, A., Wang, C., Torpy, J. R., Bartonicek, N., Wang, T., Larsson, L., Kaczorowski, D., Weisenfeld, N. I., Uytingco, C. R., Chew, J. G., Bent, Z. W., Chan, C.-L., Gnanasambandapillai, V., … Swarbrick, A. (2021). A single-cell and spatially resolved atlas of human breast cancers. Nature Genetics, 53(9), 1334–1347."/>
+<meta name="citation_reference" content="https://doi.org/10.1038/s41588-021-00911-1"/>
+<meta name="citation_reference" content="Wulder, M., White, J., Hermosilla, T., &amp; Coops, N. (2021). Air-and spaceborne lidar data as reference for satellite-based forest parameter retrieval and mapping over space and time. September, Silvilaser 2021, Vienna, Austria."/>
+	<link rel="stylesheet" href="https://qtanalytics.in/journals/index.php/IJERR/$$$call$$$/page/page/css?name=stylesheet" type="text/css" /><link rel="stylesheet" href="https://qtanalytics.in/journals/index.php/IJERR/$$$call$$$/page/page/css?name=font" type="text/css" /><link rel="stylesheet" href="https://qtanalytics.in/journals/lib/pkp/styles/fontawesome/fontawesome.css?v=3.3.0.19" type="text/css" /><link rel="stylesheet" href="https://qtanalytics.in/journals/plugins/generic/citations/css/citations.css?v=3.3.0.19" type="text/css" /><link rel="stylesheet" href="https://qtanalytics.in/journals/public/journals/5/styleSheet.css?d=" type="text/css" />
+</head>
+<body class="pkp_page_article pkp_op_view" dir="ltr">
+
+	<div class="pkp_structure_page">
+
+				<header class="pkp_structure_head" id="headerNavigationContainer" role="banner">
+						
+ <nav class="cmp_skip_to_content" aria-label="Jump to content links">
+	<a href="#pkp_content_main">Skip to main content</a>
+	<a href="#siteNav">Skip to main navigation menu</a>
+		<a href="#pkp_content_footer">Skip to site footer</a>
+</nav>
+
+			<div class="pkp_head_wrapper">
+
+				<div class="pkp_site_name_wrapper">
+					<button class="pkp_site_nav_toggle">
+						<span>Open Menu</span>
+					</button>
+										<div class="pkp_site_name">
+																<a href="						https://qtanalytics.in/journals/index.php/IJERR/index
+					" class="is_text">International Journal of Experimental Research and Review</a>
+										</div>
+				</div>
+
+				
+				<nav class="pkp_site_nav_menu" aria-label="Site Navigation">
+					<a id="siteNav"></a>
+					<div class="pkp_navigation_primary_row">
+						<div class="pkp_navigation_primary_wrapper">
+																				<ul id="navigationPrimary" class="pkp_navigation_primary pkp_nav_list">
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/home">
+					Home
+				</a>
+							</li>
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/view">
+					View
+				</a>
+									<ul>
+																					<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/home_page">
+										Home Page
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/important-links-websites">
+										Important Links of Website
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/authors-guidelines">
+										Author's guidelines
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/reviewer-guidelines">
+										Reviewer Guidelines
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/additional-archiving-abstracting-and-indexing">
+										Additional Archiving, Abstracting & Indexing
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/time-of-publication">
+										Time of Publication
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/charges-for-article-processing">
+										Charges for Article Processing
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/impact-factor">
+										Impact Factor
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/crossmarkpolicy">
+										International Academic Publishing House (IAPH) CrossMark Policy
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/Acceptance_Rate_AR">
+										Acceptance Rate (AR)
+									</a>
+								</li>
+																		</ul>
+							</li>
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/about">
+					About
+				</a>
+									<ul>
+																					<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/about-the-journal">
+										About the Journal
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/aims-and-scope">
+										Aims & Scope
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/publication-policies">
+										Publication Policies
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/peer-review-process">
+										Peer Review Process
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/open-access-policy">
+										Open Access Policy
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/cope">
+										COPE
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/care">
+										CARE
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/misconduct-handling-complaints-process">
+										Misconduct Handling & Complaints process
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/privacy-statement">
+										Privacy Statement
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://iaph.in/international-journal-of-experimental-research-and-review-citation/">
+										Our Citations
+									</a>
+								</li>
+																		</ul>
+							</li>
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/editorial-board">
+					Editorial Board
+				</a>
+							</li>
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/online-submission">
+					Online Submission
+				</a>
+									<ul>
+																					<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/online-submission-procedure">
+										Online submission procedure
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/status-code">
+										Status code
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/copyright-form-template">
+										Copyright Form Template
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/cover-letter-cum-declaration-template">
+										Cover Letter Cum Declaration Template
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/revised-manuscript-template">
+										Revised Manuscript Template
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/sample-model-paper-pdf">
+										Sample / Model Paper (PDF)
+									</a>
+								</li>
+																		</ul>
+							</li>
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/issue/current">
+					Current
+				</a>
+							</li>
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/issue/archive">
+					Archives
+				</a>
+							</li>
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/contact-us">
+					Contact Us
+				</a>
+							</li>
+								<li class="">
+				<a href="http://www.iaph.co.in/">
+					Publishing House
+				</a>
+							</li>
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/announcement">
+					Announcements
+				</a>
+							</li>
+			</ul>
+
+				
+
+																						<div class="pkp_navigation_search_wrapper">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/search" class="pkp_search pkp_search_desktop">
+										<span class="fa fa-search" aria-hidden="true"></span>
+										Search
+									</a>
+								</div>
+													</div>
+					</div>
+					<div class="pkp_navigation_user_wrapper" id="navigationUserWrapper">
+							<ul id="navigationUser" class="pkp_navigation_user pkp_nav_list">
+								<li class="profile">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/user/register">
+					Register
+				</a>
+							</li>
+								<li class="profile">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/login">
+					Login
+				</a>
+							</li>
+										</ul>
+
+					</div>
+				</nav>
+			</div><!-- .pkp_head_wrapper -->
+		</header><!-- .pkp_structure_head -->
+
+						<div class="pkp_structure_content has_sidebar">
+			<div class="pkp_structure_main" role="main">
+				<a id="pkp_content_main"></a>
+
+<div class="page page_article">
+			<nav class="cmp_breadcrumbs" role="navigation" aria-label="You are here:">
+	<ol>
+		<li>
+			<a href="https://qtanalytics.in/journals/index.php/IJERR/index">
+				Home
+			</a>
+			<span class="separator">/</span>
+		</li>
+		<li>
+			<a href="https://qtanalytics.in/journals/index.php/IJERR/issue/archive">
+				Archives
+			</a>
+			<span class="separator">/</span>
+		</li>
+					<li>
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/issue/view/249">
+					Vol. 47 (2025)
+				</a>
+				<span class="separator">/</span>
+			</li>
+				<li class="current" aria-current="page">
+			<span aria-current="page">
+									Articles
+							</span>
+		</li>
+	</ol>
+</nav>
+	
+		  	 <article class="obj_article_details">
+
+		
+	<h1 class="page_title">
+		Enhancing Cassava Disease Detection: Leveraging Deep Convolutional Neural Networks and Data Augmentation for Accurate Diagnosis
+	</h1>
+
+	
+	<div class="row">
+		<div class="main_entry">
+
+							<section class="item authors">
+					<h2 class="pkp_screen_reader">Authors</h2>
+					<ul class="authors">
+											<li>
+							<span class="name">
+								Poonam Chaudhary
+							</span>
+															<span class="affiliation">
+									Data Science Lead, CSE Department, The NorthCap University, Gurugram, India
+																	</span>
+																						<span class="orcid">
+																		<a href="https://orcid.org/0000-0001-5529-5561" target="_blank">
+										https://orcid.org/0000-0001-5529-5561
+									</a>
+								</span>
+													</li>
+											<li>
+							<span class="name">
+								Monika Lamba
+							</span>
+															<span class="affiliation">
+									Data Science Lead, CSE Department, The NorthCap University, Gurugram, India
+																	</span>
+																						<span class="orcid">
+																		<a href="https://orcid.org/0000-0003-1695-9614" target="_blank">
+										https://orcid.org/0000-0003-1695-9614
+									</a>
+								</span>
+													</li>
+											<li>
+							<span class="name">
+								Sneha Kandacharam
+							</span>
+															<span class="affiliation">
+									Data Science Lead, CSE Department, The NorthCap University, Gurugram, India
+																	</span>
+																						<span class="orcid">
+																		<a href="https://orcid.org/0009-0004-1330-1942" target="_blank">
+										https://orcid.org/0009-0004-1330-1942
+									</a>
+								</span>
+													</li>
+										</ul>
+				</section>
+			
+																												<section class="item doi">
+						<h2 class="label">
+														DOI:
+						</h2>
+						<span class="value">
+							<a href="https://doi.org/10.52756/ijerr.2025.v47.008">
+								https://doi.org/10.52756/ijerr.2025.v47.008
+							</a>
+						</span>
+					</section>
+																
+									<section class="item keywords">
+				<h2 class="label">
+										Keywords:
+				</h2>
+				<span class="value">
+											Cassava disease detection, 											Deep learning architectures, 											Efficient Net, 											Disease surveillance									</span>
+			</section>
+			
+										<section class="item abstract">
+					<h2 class="label">Abstract</h2>
+					<p>Cassava, a widely cultivated staple food crop in the tropics, is frequently afflicted by various diseases that significantly decrease its yield. Cassava leaf disease diagnosis with four common cassava leaf diseases: cassava brown streak disease, cassava green mite, cassava bacterial blight, and cassava mosaic disease using state-of-the-art image classification techniques of deep CNN was implemented. In the proposed method data augmentation approaches have been applied to enlarge the dataset for better model performance. The methodology uses machine learning methods to surpass the conventional manual identification methods for recognizing affected leaf images, potentially increasing agricultural productivity through faster and more accurate disease detection that will lead to improved yield and better resource management in cassava cultivation. Evaluated the performance of various Deep Learning architectures, including LeNet, VGG-16, ResNet-50 and Efficient Net, as well as used various callback techniques. These include early stopping to prevent overfitting and model checkpointing, which saves the best-performing model, along with a learning rate reduction for fine-tuning these models and further optimizing their performance. The research, therefore, opens the possibilities of automated disease detection, greatly helping farmers in timely and accurate diagnosis for better management practices to ensure increased food security in cassava-growing regions, especially when mobile technology increases access to diagnostic tools and supports the field applicability of machine learning models. Further, deploying such models in the field has another advantage in embedding disease surveillance into the day-to-day activities of farmers, which again becomes an effective way to improve crop management strategies and responses in different agricultural contexts.</p>
+				</section>
+			
+			
+
+																																	
+										<section class="item references">
+					<h2 class="label">
+						References
+					</h2>
+					<div class="value">
+																					<p>Akash, F. R., Priniya, A. A., Chadni, J. S., Shuha, J. A., Emu, I. A., Reza, A. W., &amp; Arefin, M. S. (2023). Deep Learning Approach for COVID-19 Detection: A Diagnostic Tool Based on VGG16 and VGG19. Intelligent Computing and Optimization, 394–403. </p>
+															<p><a href="https://doi.org/10.1007/978-3-031-50158-6_39">https://doi.org/10.1007/978-3-031-50158-6_39</a> </p>
+															<p>Albattah, W., Nawaz, M., Javed, A., Masood, M., &amp; Albahli, S. (2021). A novel deep learning method for detection and classification of plant diseases. Complex &amp; Intelligent Systems, 8(1), 507–524. <a href="https://doi.org/10.1007/s40747-021-00536-1">https://doi.org/10.1007/s40747-021-00536-1</a> </p>
+															<p>Aruna, R., Prabu, M., Ananthi, S., Bharathi, V. C., Sathya, R., &amp; Suchithra, B. (2023). Vision based Cassava Plant Leaf Disease Classification using Machine Learning Techniques. 2nd International Conference on Automation, Computing and Renewable Systems (ICACRS), 959–964. <a href="https://doi.org/10.1109/icacrs58579.2023.10404468">https://doi.org/10.1109/icacrs58579.2023.10404468</a> </p>
+															<p>Azeta, A., Jonathan, K., Guembe, B., &amp; Nwadoziokwu, E. (2023). A Deep Learning Approach for Cassava Leaf Disease Diagnosis. SSRN Electronic Journal. <a href="https://doi.org/10.2139/ssrn.4669543">https://doi.org/10.2139/ssrn.4669543</a> </p>
+															<p>Deep Convolution Neural Network Based solution for Detecting Plant Diseases. (2022). Journal of Pharmaceutical Negative Results, 13(S01). <a href="https://doi.org/10.47750/pnr.2022.13.s01.57">https://doi.org/10.47750/pnr.2022.13.s01.57</a> </p>
+															<p>Demilie, W. B. (2024). Plant disease detection and classification techniques: a comparative study of the performances. Journal of Big Data, 11(1). <a href="https://doi.org/10.1186/s40537-023-00863-9">https://doi.org/10.1186/s40537-023-00863-9</a> </p>
+															<p>Emmanuel, A., Mwangi, R. W., Murithi, P., Fredrick, K., &amp; Danison, T. (2023). Classification of cassava leaf diseases using deep Gaussian transfer learning model. Engineering Reports, 5(9). Portico. <a href="https://doi.org/10.1002/eng2.12651">https://doi.org/10.1002/eng2.12651</a> </p>
+															<p>Jayaprakash, K., &amp; Balamurugan, S. P. (2020). Analysis of Plant Disease Detection and Classification Models: A Computer Vision Perspective. Journal of Computational and Theoretical Nanoscience, 17(12), 5422–5428. <a href="https://doi.org/10.1166/jctn.2020.9435">https://doi.org/10.1166/jctn.2020.9435</a> </p>
+															<p>Kumar, A., Singh, S., Gaurav, A. K., Srivastava, S., &amp; Verma, J. P. (2020). Plant Growth-Promoting Bacteria: Biological Tools for the Mitigation of Salinity Stress in Plants. Frontiers in Microbiology, 11. <a href="https://doi.org/10.3389/fmicb.2020.01216">https://doi.org/10.3389/fmicb.2020.01216</a> </p>
+															<p>LeCun, Y., Bengio, Y., &amp; Hinton, G. (2015). Deep learning. Nature, 521(7553), 436–444. <a href="https://doi.org/10.1038/nature14539">https://doi.org/10.1038/nature14539</a> </p>
+															<p>Li, R., Chen, S., Matsumoto, H., Gouda, M., Gafforov, Y., Wang, M., &amp; Liu, Y. (2023). Predicting rice diseases using advanced technologies at different scales: present status and future perspectives. Abiotech., 4(4), 359–371. <a href="https://doi.org/10.1007/s42994-023-00126-4">https://doi.org/10.1007/s42994-023-00126-4</a> </p>
+															<p>Liang, C., Amelung, W., Lehmann, J., &amp; Kästner, M. (2019). Quantitative assessment of microbial necromass contribution to soil organic matter. Global Change Biology, 25(11), 3578–3590. Portico. <a href="https://doi.org/10.1111/gcb.14781">https://doi.org/10.1111/gcb.14781</a> </p>
+															<p>Mohanty, S. P., Hughes, D. P., &amp; Salathé, M. (2016). Using Deep Learning for Image-Based Plant Disease Detection. Frontiers in Plant Science, 7. <a href="https://doi.org/10.3389/fpls.2016.01419">https://doi.org/10.3389/fpls.2016.01419</a> </p>
+															<p>Mohanty, S. P., Hughes, D. P., &amp; Salathé, M. (2016). Using Deep Learning for Image-Based Plant Disease Detection. Frontiers in Plant Science, 7. <a href="https://doi.org/10.3389/fpls.2016.01419">https://doi.org/10.3389/fpls.2016.01419</a> </p>
+															<p>Pathak, Y., Shukla, P. K., Tiwari, A., Stalin, S., Singh, S., &amp; Shukla, P. K. (2022). Deep Transfer Learning Based Classification Model for COVID-19 Disease. IRBM, 43(2), 87–92. <a href="https://doi.org/10.1016/j.irbm.2020.05.003">https://doi.org/10.1016/j.irbm.2020.05.003</a> </p>
+															<p>Prasad, P., &amp; Agniraj, S. (2024). Cross-Domain Adaptation Techniques for Robust Plant Disease Detection: A DANN-CORAL Hybrid Approach. International Journal of Experimental Research and Review, 42, 68-84. <a href="https://doi.org/10.52756/ijerr.2024.v42.007">https://doi.org/10.52756/ijerr.2024.v42.007</a> </p>
+															<p>Reichstein, M., Camps-Valls, G., Stevens, B., Jung, M., Denzler, J., Carvalhais, N., &amp; Prabhat. (2019). Deep learning and process understanding for data-driven Earth system science. Nature, 566(7743), 195–204. <a href="https://doi.org/10.1038/s41586-019-0912-1">https://doi.org/10.1038/s41586-019-0912-1</a> </p>
+															<p>Shruthi, U., Nagaveni, V., &amp; Raghavendra, B. K. (2019). A Review on Machine Learning Classification Techniques for Plant Disease Detection. 5th International Conference on Advanced Computing &amp; Communication Systems (ICACCS), 281–284. </p>
+															<p><a href="https://doi.org/10.1109/icaccs.2019.8728415">https://doi.org/10.1109/icaccs.2019.8728415</a> </p>
+															<p>Shukla, S., Upadhyay, D., Mishra, A., Jindal, T., &amp; Shukla, K. (2022). Challenges Faced by Farmers in Crops Production Due to Fungal Pathogens and Their Effect on Indian Economy. Fungal Diversity, Ecology and Control Management, 495–505. <a href="https://doi.org/10.1007/978-981-16-8877-5_24">https://doi.org/10.1007/978-981-16-8877-5_24</a> </p>
+															<p>Thakur, P. S., Khanna, P., Sheorey, T., &amp; Ojha, A. (2022). Trends in vision-based machine learning techniques for plant disease identification: A systematic review. Expert Systems with Applications, 208, 118117. </p>
+															<p><a href="https://doi.org/10.1016/j.eswa.2022.118117Uke">https://doi.org/10.1016/j.eswa.2022.118117Uke</a>, A., Tokunaga, H., Utsumi, Y., Vu, N. A., Nhan, P. T., Srean, P., Hy, N. H., Ham, L. H., Lopez-Lavalle, L. A. B., Ishitani, M., Hung, N., Tuan, L. N., Van Hong, N., Huy, N. Q., Hoat, T. X., Takasu, K., Seki, M., &amp; Ugaki, M. (2021). Cassava mosaic disease and its management in Southeast Asia. Plant Molecular Biology, 109(3), 301–311. <a href="https://doi.org/10.1007/s11103-021-01168-2">https://doi.org/10.1007/s11103-021-01168-2</a> </p>
+															<p>Upadhyay, S., Jain, J., &amp; Prasad, R. (2024). Early Blight and Late Blight Disease Detection in Potato Using Efficientnetb0. International Journal of Experimental Research and Review, 38, 15-25. <a href="https://doi.org/10.52756/ijerr.2024.v38.002">https://doi.org/10.52756/ijerr.2024.v38.002</a> </p>
+															<p>Vardhan, J.V., &amp; Swetha, K.S. (2023). Detection of healthy and diseased crops in drone captured images using Deep Learning. ArXiv, abs/2305.13490. </p>
+															<p>Wu, S. Z., Al-Eryani, G., Roden, D. L., Junankar, S., Harvey, K., Andersson, A., Thennavan, A., Wang, C., Torpy, J. R., Bartonicek, N., Wang, T., Larsson, L., Kaczorowski, D., Weisenfeld, N. I., Uytingco, C. R., Chew, J. G., Bent, Z. W., Chan, C.-L., Gnanasambandapillai, V., … Swarbrick, A. (2021). A single-cell and spatially resolved atlas of human breast cancers. Nature Genetics, 53(9), 1334–1347. </p>
+															<p><a href="https://doi.org/10.1038/s41588-021-00911-1">https://doi.org/10.1038/s41588-021-00911-1</a> </p>
+															<p>Wulder, M., White, J., Hermosilla, T., &amp; Coops, N. (2021). Air-and spaceborne lidar data as reference for satellite-based forest parameter retrieval and mapping over space and time. September, Silvilaser 2021, Vienna, Austria. </p>
+																		</div>
+				</section>
+			
+		</div><!-- .main_entry -->
+
+		<div class="entry_details">
+
+										<div class="item cover_image">
+					<div class="sub_item">
+													<a href="https://qtanalytics.in/journals/index.php/IJERR/issue/view/249">
+								<img src="https://qtanalytics.in/journals/public/journals/5/cover_issue_249_en_US.jpg" alt="">
+							</a>
+											</div>
+				</div>
+			
+										<div class="item galleys">
+					<h2 class="pkp_screen_reader">
+						Downloads
+					</h2>
+					<ul class="value galleys_links">
+													<li>
+								
+	
+							
+
+<a class="obj_galley_link pdf" href="https://qtanalytics.in/journals/index.php/IJERR/article/view/4438/2517">
+
+		
+	PDF
+
+	</a>
+							</li>
+													<li>
+								
+	
+							
+
+<a class="obj_galley_link file" href="https://qtanalytics.in/journals/index.php/IJERR/article/view/4438/2518">
+
+		
+	Check for updates
+
+	</a>
+							</li>
+											</ul>
+				</div>
+						
+						<div class="item published">
+				<section class="sub_item">
+					<h2 class="label">
+						Published
+					</h2>
+					<div class="value">
+																			<span>2025-04-30</span>
+																	</div>
+				</section>
+							</div>
+			
+										<div class="item citation">
+					<section class="sub_item citation_display">
+						<h2 class="label">
+							How to Cite
+						</h2>
+						<div class="value">
+							<div id="citationOutput" role="region" aria-live="polite">
+								<div class="csl-bib-body">
+  <div class="csl-entry">Chaudhary, P., Lamba, M., &#38; Kandacharam, S. (2025). Enhancing Cassava Disease Detection: Leveraging Deep Convolutional Neural Networks and Data Augmentation for Accurate Diagnosis. <i>International Journal of Experimental Research and Review</i>, <i>47</i>, 93–107. https://doi.org/10.52756/ijerr.2025.v47.008</div>
+</div>
+							</div>
+							<div class="citation_formats">
+								<button class="cmp_button citation_formats_button" aria-controls="cslCitationFormats" aria-expanded="false" data-csl-dropdown="true">
+									More Citation Formats
+								</button>
+								<div id="cslCitationFormats" class="citation_formats_list" aria-hidden="true">
+									<ul class="citation_formats_styles">
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/acm-sig-proceedings?submissionId=4438&amp;publicationId=4402"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/acm-sig-proceedings?submissionId=4438&amp;publicationId=4402&amp;return=json"
+												>
+													ACM
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/acs-nano?submissionId=4438&amp;publicationId=4402"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/acs-nano?submissionId=4438&amp;publicationId=4402&amp;return=json"
+												>
+													ACS
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/apa?submissionId=4438&amp;publicationId=4402"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/apa?submissionId=4438&amp;publicationId=4402&amp;return=json"
+												>
+													APA
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/associacao-brasileira-de-normas-tecnicas?submissionId=4438&amp;publicationId=4402"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/associacao-brasileira-de-normas-tecnicas?submissionId=4438&amp;publicationId=4402&amp;return=json"
+												>
+													ABNT
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/chicago-author-date?submissionId=4438&amp;publicationId=4402"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/chicago-author-date?submissionId=4438&amp;publicationId=4402&amp;return=json"
+												>
+													Chicago
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/harvard-cite-them-right?submissionId=4438&amp;publicationId=4402"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/harvard-cite-them-right?submissionId=4438&amp;publicationId=4402&amp;return=json"
+												>
+													Harvard
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/ieee?submissionId=4438&amp;publicationId=4402"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/ieee?submissionId=4438&amp;publicationId=4402&amp;return=json"
+												>
+													IEEE
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/modern-language-association?submissionId=4438&amp;publicationId=4402"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/modern-language-association?submissionId=4438&amp;publicationId=4402&amp;return=json"
+												>
+													MLA
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/turabian-fullnote-bibliography?submissionId=4438&amp;publicationId=4402"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/turabian-fullnote-bibliography?submissionId=4438&amp;publicationId=4402&amp;return=json"
+												>
+													Turabian
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/vancouver?submissionId=4438&amp;publicationId=4402"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/vancouver?submissionId=4438&amp;publicationId=4402&amp;return=json"
+												>
+													Vancouver
+												</a>
+											</li>
+																			</ul>
+																			<div class="label">
+											Download Citation
+										</div>
+										<ul class="citation_formats_styles">
+																							<li>
+													<a href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/download/ris?submissionId=4438&amp;publicationId=4402">
+														<span class="fa fa-download"></span>
+														Endnote/Zotero/Mendeley (RIS)
+													</a>
+												</li>
+																							<li>
+													<a href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/download/bibtex?submissionId=4438&amp;publicationId=4402">
+														<span class="fa fa-download"></span>
+														BibTeX
+													</a>
+												</li>
+																					</ul>
+																	</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			
+										<div class="item issue">
+
+											<section class="sub_item">
+							<h2 class="label">
+								Issue
+							</h2>
+							<div class="value">
+								<a class="title" href="https://qtanalytics.in/journals/index.php/IJERR/issue/view/249">
+									Vol. 47 (2025)
+								</a>
+							</div>
+						</section>
+					
+											<section class="sub_item">
+							<h2 class="label">
+								Section
+							</h2>
+							<div class="value">
+								Articles
+							</div>
+						</section>
+					
+									</div>
+			
+																														
+										<div class="item copyright">
+					<h2 class="label">
+						License
+					</h2>
+																										<p>Copyright (c) 2025 International Academic Publishing House (IAPH)</p>
+														<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" src="//i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><p>This work is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.</p>
+																
+				</div>
+			
+			<div class="item citations-container" data-image-path="https://qtanalytics.in/journals/plugins/generic/citations/images/" data-citations-url="https://qtanalytics.in/journals/index.php/IJERR/citations/get?citationsId=10.52756%2Fijerr.2025.v47.008&amp;citationsShowList=&amp;citationsProvider=all"
+     data-citations-provider="all" data-citations-total="" data-citations-list=""
+     data-show-google="1" data-show-pmc="0">
+	<div id="citations-loader"></div>
+	<div class="citations-count">
+		<div class="citations-count-crossref">
+			<img class="img-fluid" src="https://qtanalytics.in/journals/plugins/generic/citations/images/crossref.png" alt="Crossref"/>
+			<div class="badge_total"></div>
+		</div>
+		<div class="citations-count-scopus">
+			<img src="https://qtanalytics.in/journals/plugins/generic/citations/images/scopus.png" alt="Scopus"/>
+			<br/>
+			<span class="badge_total"></span>
+		</div>
+		<div class="citations-count-google">
+			<a href="https://scholar.google.com/scholar?q=10.52756/ijerr.2025.v47.008" target="_blank" rel="noreferrer">
+				<img src="https://qtanalytics.in/journals/plugins/generic/citations/images/scholar.png" alt="Google Scholar"/>
+			</a>
+		</div>
+		<div class="citations-count-pmc">
+			<a href="http://europepmc.org/search?scope=fulltext&query=(REF:10.52756/ijerr.2025.v47.008)" target="_blank" rel="noreferrer">
+				<img src="https://qtanalytics.in/journals/plugins/generic/citations/images/pmc.png" alt="Europe PMC"/>
+				<br/>
+				<span class="badge_total"></span>
+			</a>
+		</div>
+	</div>
+	<div class="citations-list"></div>
+    </div>
+
+
+		</div><!-- .entry_details -->
+	</div><!-- .row -->
+
+</article>
+
+	<div id="articlesBySameAuthorList">
+						<h3>Most read articles by the same author(s)</h3>
+
+			<ul>
+																													<li>
+													Madhur Nagrath,
+													Poonam Chaudhary,
+													Meghna Sharma,
+												<a href="https://qtanalytics.in/journals/index.php/IJERR/article/view/4439">
+							Leveraging Deep Pre-trained Networks for Advanced Skin Lesion Classification for Human Monkeypox Detection
+						</a>,
+						<a href="https://qtanalytics.in/journals/index.php/IJERR/issue/view/249">
+							International Journal of Experimental Research and Review: Vol. 47 (2025)
+						</a>
+					</li>
+							</ul>
+			<div id="articlesBySameAuthorPages">
+				
+			</div>
+			</div>
+
+
+</div><!-- .page -->
+
+	</div><!-- pkp_structure_main -->
+
+									<div class="pkp_structure_sidebar left" role="complementary" aria-label="Sidebar">
+				 
+<div class="pkp_block block_make_submission">
+	<h2 class="pkp_screen_reader">
+		Make a Submission
+	</h2>
+
+	<div class="content">
+		<a class="block_make_submission_link" href="https://qtanalytics.in/journals/index.php/IJERR/about/submissions">
+			Make a Submission
+		</a>
+	</div>
+</div>
+<div class="pkp_block block_Keywordcloud">
+	<h2 class="title">Keywords</h2>
+	<div class="content" id='wordcloud'></div>
+
+	<script>
+		function randomColor() {
+			var cores = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
+			return cores[Math.floor(Math.random()*cores.length)];
+		}
+
+					document.addEventListener("DOMContentLoaded", function() {
+				var keywords = [{"text":"powder metallurgy","size":1},{"text":"w\u2013cu composites","size":1},{"text":"fabrication","size":1},{"text":"mechanical properties","size":1},{"text":"aisi h13 tool steel","size":1},{"text":"full factorial method","size":1},{"text":"gas nitriding","size":1},{"text":"surface hardening","size":1},{"text":"tribomete","size":1},{"text":"anova","size":1},{"text":"tio2","size":1},{"text":"wear rate","size":1},{"text":"signal to noise ratio","size":1},{"text":"co\u2082 emissions","size":1},{"text":"economic growth","size":1},{"text":"environmental kuznets curve","size":1},{"text":"foreign direct investment","size":1},{"text":"health expenditure per capita","size":1},{"text":"trade openness","size":1},{"text":"cancer chemotherapy","size":1},{"text":"metallodrugs","size":1},{"text":"cisplatin","size":1},{"text":"apoptosis","size":1},{"text":"cancer cells","size":1},{"text":"competition functions","size":1},{"text":"groundnut","size":1},{"text":"ntercropping","size":1},{"text":"pearl millet","size":1},{"text":"spatial arrangement","size":1},{"text":"iot security","size":1},{"text":"encryption","size":1},{"text":"cyber threats","size":1},{"text":"data security","size":1},{"text":"authentication","size":1},{"text":"security solutions","size":1},{"text":"black spot identification","size":1},{"text":"urban traffic accident prediction","size":1},{"text":"traffic safety management","size":1},{"text":"statistical methods","size":1},{"text":"machine learning approaches","size":1},{"text":"child health","size":1},{"text":"family planning","size":1},{"text":"health","size":1},{"text":"healthcare services","size":1},{"text":"maharashtra","size":1},{"text":"maternal health","size":1},{"text":"deep learning","size":1},{"text":"environmental data","size":1},{"text":"temperature prediction","size":1},{"text":"time series forecasting","size":1}];
+				var totalWeight = 0;
+				var width = 300;
+				var height = 200;
+				var transitionDuration = 200;	
+				var length_keywords = keywords.length;
+				var layout = d3.layout.cloud();
+
+				layout.size([width, height])
+					.words(keywords)
+					.fontSize(function(d)
+					{
+						return fontSize(+d.size);
+					})
+					.on('end', draw);
+				
+				var svg = d3.select("#wordcloud").append("svg")
+					.attr("viewBox", "0 0 " + width + " " + height)	
+					.attr("width", '100%');		
+				
+				function update() {
+					var words = layout.words();
+					fontSize = d3.scaleLinear().range([16, 34]);
+					if (words.length) {
+						fontSize.domain([+words[words.length - 1].size || 1, +words[0].size]);
+					}
+				}
+				
+				keywords.forEach(function(item,index){totalWeight += item.size;});
+
+				update();
+
+				function draw(words, bounds) {
+					var w = layout.size()[0],
+						h = layout.size()[1];
+
+					scaling = bounds
+						? Math.min(
+							w / Math.abs(bounds[1].x - w / 2),
+							w / Math.abs(bounds[0].x - w / 2),
+							h / Math.abs(bounds[1].y - h / 2),
+							h / Math.abs(bounds[0].y - h / 2),
+						) / 2
+						: 1;
+
+					svg
+					.append("g")
+					.attr(
+						"transform",
+						"translate(" + [w >> 1, h >> 1] + ")scale(" + scaling + ")",
+					)
+					.selectAll("text")
+						.data(words)
+					.enter().append("text")
+						.style("font-size", function(d) { return d.size + "px"; })
+						.style("font-family", 'serif')
+						.style("fill", randomColor)
+						.style('cursor', 'pointer')
+						.style('opacity', 0.7)
+						.attr('class', 'keyword')
+						.attr("text-anchor", "middle")
+						.attr("transform", function(d) {
+							return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+						}) 
+						.text(function(d) { return d.text; })
+						.on("click", function(d, i){
+							window.location = "https://qtanalytics.in/journals/index.php/IJERR/search?query=QUERY_SLUG".replace(/QUERY_SLUG/, encodeURIComponent(''+d.text+''));
+						})
+						.on("mouseover", function(d, i) {
+							d3.select(this).transition()
+								.duration(transitionDuration)
+								.style('font-size',function(d) { return (d.size + 3) + "px"; })
+								.style('opacity', 1);
+						})
+						.on("mouseout", function(d, i) {
+							d3.select(this).transition()
+								.duration(transitionDuration)
+								.style('font-size',function(d) { return d.size + "px"; })
+								.style('opacity', 0.7);
+						})
+						.on('resize', function() { update() });
+				}
+
+				layout.start();
+
+			});
+			</script>
+</div>
+<div class="pkp_block block_custom" id="customblock-indexing">
+	<h2 class="title pkp_screen_reader">indexing</h2>
+	<div class="content">
+		<p style="text-align: center;"><span style="text-decoration: underline;"><strong>Click to view us on the world's database - </strong></span></p>
+<p style="text-align: center;"><a title="Academia.edu" href="https://wbsubregistration.academia.edu/InternationalJournalofExperimentalResearchandReviewIAPH" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/ae.png" alt="academia_edu"></a></p>
+<p style="text-align: center;"><a title="DOI &amp; CrossRef" href="https://search.crossref.org/?q=2455-4855&amp;from_ui=yes%20" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/CR_doi.png" alt="doi and crossref" width="300" height="75"></a></p>
+<p style="text-align: center;"><a title="Check Update" href="https://qtanalytics.in/journals/index.php/IJERR/crossmarkpolicy" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/CU.png" alt="check update"></a></p>
+<p style="text-align: center;"><a title="EuroPub" href="https://europub.co.uk/journals/international-journal-of-experimental-research-and-review-J-29269" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/EP.png" alt="EuroPub"></a></p>
+<p style="text-align: center;"><a title="Google Scholar" href="https://scholar.google.com/citations?hl=en&amp;user=C_RSGo8AAAAJ&amp;scilu=&amp;scisig=AMD79ooAAAAAYJFPJwVUjnSdHJMirwAuM1AE9Xyt29Qf&amp;gmla=AJsN-F6C6FOcC1BVTsciMh_jJzbvDlMEAG7iXtc54pVkOEW1hM7YEYd0LOg2Y8qtljAtMcH7BVFXYAhy5RDj-qOlv86g_Xbpuk9zP4-L0jeteDVxAP9q5gI4HuzCkta1GM4nN1_wzT3Z&amp;sciund=9397875962564903239" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/GS.png" alt="Google Scholar"></a></p>
+<p style="text-align: center;"><a title="Internet Archive" href="https://archive.org/details/@international_journal_of_experimental_research_and_review" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/iA.png" alt="Internet Archive"></a></p>
+<p style="text-align: center;"><a title="ICMJE" href="https://www.icmje.org/journals-following-the-icmje-recommendations/" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/icmje.png" alt="ICMJE"></a></p>
+<p style="text-align: center;"><a title="INDEX COPERNICUS" href="https://journals.indexcopernicus.com/search/journal/issue?issueId=all&amp;journalId=122825" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/INDEX_COPERNICUS.png" alt="index_copernicus" width="310" height="77"></a></p>
+<p style="text-align: center;">&nbsp;</p>
+	</div>
+</div>
+<div class="pkp_block block_custom" id="customblock-ar">
+	<h2 class="title pkp_screen_reader">ar</h2>
+	<div class="content">
+		<p><a title="Acceptance Rate (AR)" href="https://qtanalytics.in/journals/index.php/IJERR/Acceptance_Rate_AR" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/AR2.png" width="315" height="85"></a></p>
+	</div>
+</div>
+
+			</div><!-- pkp_sidebar.left -->
+			</div><!-- pkp_structure_content -->
+
+<div class="pkp_structure_footer_wrapper" role="contentinfo">
+	<a id="pkp_content_footer"></a>
+
+	<div class="pkp_structure_footer">
+
+					<div class="pkp_footer_content">
+				<p><strong>Find International Journal of Experimental Research and Review on -</strong>  <a href="https://www.facebook.com/iaph.official/" target="_blank" rel="noopener">Facebook</a> | <a href="https://twitter.com/iaph_journal">Twitter</a> | <a href="https://www.linkedin.com/in/international-academic-publishing-house-3b0456258/?original_referer=" target="_blank" rel="noopener">Linkedin</a> <br />Copyright © 2023 International Academic Publishing House (IAPH)</p>
+<p><a href="https://info.flagcounter.com/qlQV"><img src="https://s11.flagcounter.com/count2/qlQV/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_12/viewers_3/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" width="162" height="47" border="0" /></a><img src="https://qtanalytics.in/journals/public/site/images/chiefeditoriaph/barcode.png" alt="Bar codes" width="78" height="27" /></p>
+			</div>
+		
+		<div class="pkp_brand_footer" role="complementary">
+			<a href="https://qtanalytics.in/journals/index.php/IJERR/about/aboutThisPublishingSystem">
+				<img alt="More information about the publishing system, Platform and Workflow by OJS/PKP." src="https://qtanalytics.in/journals/templates/images/ojs_brand.png">
+			</a>
+		</div>
+	</div>
+</div><!-- pkp_structure_footer_wrapper -->
+
+</div><!-- pkp_structure_page -->
+
+<script src="https://qtanalytics.in/journals/lib/pkp/lib/vendor/components/jquery/jquery.min.js?v=3.3.0.19" type="text/javascript"></script><script src="https://qtanalytics.in/journals/lib/pkp/lib/vendor/components/jqueryui/jquery-ui.min.js?v=3.3.0.19" type="text/javascript"></script><script src="https://qtanalytics.in/journals/plugins/themes/default/js/lib/popper/popper.js?v=3.3.0.19" type="text/javascript"></script><script src="https://qtanalytics.in/journals/plugins/themes/default/js/lib/bootstrap/util.js?v=3.3.0.19" type="text/javascript"></script><script src="https://qtanalytics.in/journals/plugins/themes/default/js/lib/bootstrap/dropdown.js?v=3.3.0.19" type="text/javascript"></script><script src="https://qtanalytics.in/journals/plugins/themes/default/js/main.js?v=3.3.0.19" type="text/javascript"></script><script src="https://qtanalytics.in/journals/plugins/generic/citationStyleLanguage/js/articleCitation.js?v=3.3.0.19" type="text/javascript"></script><script src="https://qtanalytics.in/journals/plugins/generic/citations/js/citations.js?v=3.3.0.19" type="text/javascript"></script><script src="https://d3js.org/d3.v4.js?v=3.3.0.19" type="text/javascript"></script><script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js?v=3.3.0.19" type="text/javascript"></script><script type="text/javascript">
+(function (w, d, s, l, i) { w[l] = w[l] || []; var f = d.getElementsByTagName(s)[0],
+j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; 
+j.src = 'https://www.googletagmanager.com/gtag/js?id=' + i + dl; f.parentNode.insertBefore(j, f); 
+function gtag(){dataLayer.push(arguments)}; gtag('js', new Date()); gtag('config', i); })
+(window, document, 'script', 'dataLayer', 'G-FL3R91GDMG');
+</script>
+
+
+</body>
+</html>

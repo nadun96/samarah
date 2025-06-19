@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en-US" xml:lang="en-US">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
+		Efficient Utilization of Energy in IoT Devices Using Machine Learning Algorithms
+							| International Journal of Experimental Research and Review
+			</title>
+
+	
+<link rel="icon" href="https://qtanalytics.in/journals/public/journals/5/favicon_en_US.png">
+<meta name="generator" content="Open Journal Systems 3.3.0.19">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PNB5RMDB43"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PNB5RMDB43');
+</script>
+<meta name="gs_meta_revision" content="1.1"/>
+<meta name="citation_journal_title" content="International Journal of Experimental Research and Review"/>
+<meta name="citation_journal_abbrev" content="IJERR"/>
+<meta name="citation_issn" content="2455-4855"/> 
+<meta name="citation_author" content="Kumar Saurabh"/>
+<meta name="citation_author_institution" content="Department of Computer Science &amp; Engineering, Integral University, Lucknow, UP, India"/>
+<meta name="citation_author" content="Manish Madhava Tripathi"/>
+<meta name="citation_author_institution" content="Department of Computer Science &amp; Engineering, Integral University, Lucknow, UP, India"/>
+<meta name="citation_author" content="Satyasundara Mahapatra"/>
+<meta name="citation_author_institution" content="Department of Computer Science &amp; Engineering, Pranveer Singh Institute of Technology Kanpur, UP, India"/>
+<meta name="citation_title" content="Efficient Utilization of Energy in IoT Devices Using Machine Learning Algorithms"/>
+<meta name="citation_language" content="en"/>
+<meta name="citation_date" content="2025/04/30"/>
+<meta name="citation_volume" content="47"/>
+<meta name="citation_firstpage" content="133"/>
+<meta name="citation_lastpage" content="145"/>
+<meta name="citation_doi" content="10.52756/ijerr.2025.v47.011"/>
+<meta name="citation_abstract_html_url" content="https://qtanalytics.in/journals/index.php/IJERR/article/view/4332"/>
+<meta name="citation_keywords" xml:lang="en" content="Adaptive resource management"/>
+<meta name="citation_keywords" xml:lang="en" content="Energy efficiency"/>
+<meta name="citation_keywords" xml:lang="en" content="Energy-aware algorithms"/>
+<meta name="citation_keywords" xml:lang="en" content="Machine learning"/>
+<meta name="citation_keywords" xml:lang="en" content="Predictive modelling"/>
+<meta name="citation_pdf_url" content="https://qtanalytics.in/journals/index.php/IJERR/article/download/4332/2523"/>
+<meta name="citation_reference" content="Abdulateef, A. T., &amp; Makki, S. A. (2023). A survey of indoor positioning system based-smartphone. AIP Conference Proceedings, 030005. https://doi.org/10.1063/5.0181876"/>
+<meta name="citation_reference" content="Aboelsoud, K., Diab, H. Y., Abdelsalam, M., &amp; Hegaze, M. M. (2024). An Efficient GPS Algorithm for Maximizing Electric Vehicle Range. Applied Sciences, 14(11), 4858. https://doi.org/10.3390/app14114858"/>
+<meta name="citation_reference" content="Albraheem, L., Alshathri, H., Alsheddi, R., Alotaibi, R., &amp; Alkharashi, G. (2022). Hybrid asset localization using light fidelity and Bluetooth Low Energy. PLOS ONE, 17(9), e0274452. https://doi.org/10.1371/journal.pone.0274452"/>
+<meta name="citation_reference" content="Al-Fuqaha, A., Guizani, M., Mohammadi, M., Aledhari, M., &amp; Ayyash, M. (2015). Internet of Things: A Survey on Enabling Technologies, Protocols, and Applications. IEEE Communications Surveys &amp; Tutorials, 17(4), 2347–2376. https://doi.org/10.1109/COMST.2015.2444095"/>
+<meta name="citation_reference" content="Amudha, S., &amp; Murali, M. (2021). Deep learning based energy efficient novel scheduling algorithms for body-fog-cloud in smart hospital. Journal of Ambient Intelligence and Humanized Computing, 12(7), 7441–7460. https://doi.org/10.1007/s12652-020-02421-0"/>
+<meta name="citation_reference" content="Chen, Y.H. (2024). Adaptive Signal Control for Multimodal Traffic: Concurrently Offering Multi-Path Progression and Transit-Friendly Signal in Real-Time. IEEE Transactions on Intelligent Transportation Systems, 25(9), 10967–10982. https://doi.org/10.1109/TITS.2024.3361685"/>
+<meta name="citation_reference" content="Cheng, Y. L., Lim, M. H., &amp; Hui, K. H. (2022). Impact of internet of things paradigm towards energy consumption prediction: A systematic literature review. Sustainable Cities and Society, 78, 103624. https://doi.org/10.1016/j.scs.2021.103624"/>
+<meta name="citation_reference" content="Cheriyan, R., Abraham, J., Sree Sankar, E., Narayanan, S., &amp; Mathai, R. G. (2022). Nemo: Energy Efficient Location Tracker for Dementia Patients Using LoRaWAN and Adaptive GPS Duty Cycling Strategies, pp. 511–521. https://doi.org/10.1007/978-3-030-77528-5_27"/>
+<meta name="citation_reference" content="Cui, L., Yang, S., Chen, F., Ming, Z., Lu, N., &amp; Qin, J. (2018). A survey on application of machine learning for Internet of Things. International Journal of Machine Learning and Cybernetics, 9(8), 1399–1417. https://doi.org/10.1007/s13042-018-0834-5"/>
+<meta name="citation_reference" content="da Silva, D. G., &amp; Meneses, A. A. de M. (2023). Comparing Long Short-Term Memory (LSTM) and bidirectional LSTM deep neural networks for power consumption prediction. Energy Reports, 10, 3315–3334. https://doi.org/10.1016/j.egyr.2023.09.175"/>
+<meta name="citation_reference" content="Dawn, N., Ghosh, T., Ghosh, S., Saha, A., Mukherjee, P., Sarkar, S., Guha, S., &amp; Sanyal, T. (2023). Implementation of Artificial Intelligence, Machine Learning, and Internet of Things (IoT) in revolutionizing Agriculture: A review on recent trends and challenges. Int. J. Exp. Res. Rev., 30, 190-218. https://doi.org/10.52756/ijerr.2023.v30.018"/>
+<meta name="citation_reference" content="Deng, Z., Huang, D., Liu, J., Mi, B., &amp; Liu, Y. (2021). An Assessment Method for Traffic State Vulnerability Based on a Cloud Model for Urban Road Network Traffic Systems. IEEE Transactions on Intelligent Transportation Systems, 22(11), 7155–7168. https://doi.org/10.1109/TITS.2020.3002455"/>
+<meta name="citation_reference" content="Ding, X., &amp; Wu, J. (2019). Study on Energy Consumption Optimization Scheduling for Internet of Things. IEEE Access, 7, 70574–70583."/>
+<meta name="citation_reference" content="https://doi.org/10.1109/ACCESS.2019.2919769"/>
+<meta name="citation_reference" content="Dublin Bus GPS sample data (Insight Project) from DCC - Dublin Bus GPS Data - data.smartdublin.ie. (n.d.). https://data.smartdublin.ie/dataset/dublin-bus-gps-sample-data-from-dublin-city-council-insight-project/resource/00c65697-9ed6-43cb-a2b7-9e20cf323cb3 (last accessed on 13-10-2024)"/>
+<meta name="citation_reference" content="Farid, Z., Nordin, R., Ismail, M., &amp; Abdullah, N. F. (2016). Hybrid Indoor-Based WLAN-WSN Localization Scheme for Improving Accuracy Based on Artificial Neural Network. Mobile Information Systems, 2016, 1–11. https://doi.org/10.1155/2016/6923931"/>
+<meta name="citation_reference" content="Gangadharan, S., Khanam, R., &amp; Thangasamy, V. (2024). A Study of RF Power Amplifiers for 5G and Future Generation Mobile Communication: Can FinFET Replace CMOS? International Journal of Experimental Research and Review, 46, 222–239. https://doi.org/10.52756/ijerr.2024.v46.018"/>
+<meta name="citation_reference" content="Gudumian, S., V, T. K., D, D., P, B., K B, B., &amp; G, V. S. (2024). Enhancing Electric Vehicle Performance and Connectivity through Internet of Things Integration. International Journal of Experimental Research and Review, 46, 45–57. https://doi.org/10.52756/ijerr.2024.v46.004"/>
+<meta name="citation_reference" content="Gui, J., Chen, T., Zhang, J., Cao, Q., Sun, Z., Luo, H., &amp; Tao, D. (2024). A Survey on Self-Supervised Learning: Algorithms, Applications, and Future Trends. IEEE Transactions on Pattern Analysis and Machine Intelligence, 46(12), 9052–9071. https://doi.org/10.1109/TPAMI.2024.3415112"/>
+<meta name="citation_reference" content="Hadwen, T., Smallbon, V., Zhang, Q., &amp; D’Souza, M. (2017). Energy efficient LoRa GPS tracker for dementia patients. 39th Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC), 771–774. https://doi.org/10.1109/EMBC.2017.8036938"/>
+<meta name="citation_reference" content="Haroon, M., Misra, D. K., Husain, M., Tripathi, M. M., &amp; Khan, A. (2023). Security Issues in the Internet of Things for the Development of Smart Cities, pp. 123–137. https://doi.org/10.4018/978-1-6684-8133-2.ch007"/>
+<meta name="citation_reference" content="Hisham, M., Elmogy, A., Sarhan, A., &amp; Sallam, A. (2020). Energy efficient scheduling in local area networks. Wireless Networks, 26(1), 685–698. https://doi.org/10.1007/s11276-019-02174-5"/>
+<meta name="citation_reference" content="Ilyas, Q. M., &amp; Ahmad, M. (2020). Smart Farming: An Enhanced Pursuit of Sustainable Remote Livestock Tracking and Geofencing Using IoT and GPRS. Wireless Communications and Mobile Computing, 2020, 1–12. https://doi.org/10.1155/2020/6660733"/>
+<meta name="citation_reference" content="Jain, N., Awasthi, Y., &amp; Jain, R. (2023). An IoT-based soil analysis system using optical sensors and multivariate regression. Int. J. Exp. Res. Rev., 31(Spl Volume), 23-32. https://doi.org/10.52756/10.52756/ijerr.2023.v31spl.003"/>
+<meta name="citation_reference" content="Jalalinejad, H., Rohani Hajiabadi, M., Asghar Rahmani Hosseinabadi, A., Mirkamali, S., Abraham, A., Weber, G.-W., &amp; Parikh, J. (2024). A Hybrid Multi-Hop Clustering and Energy-Aware Routing Protocol for Efficient Resource Management in Renewable Energy Harvesting Wireless Sensor Networks. IEEE Access, 12, 137310–137332. https://doi.org/10.1109/ACCESS.2024.3458795"/>
+<meta name="citation_reference" content="Johnsana, A., Ganesh, G., Manjusri, S., Mahesh, P., &amp; Reddy, C. K. (2024). Intelligent traffic system for urban conditions using real-time vehicle tracking. International Journal of Information Technology and Computer Engineering, 12(1), 329–333."/>
+<meta name="citation_reference" content="Kanakaraja, P., Kotamraju, S. K., Nagulmeera, S., Reddy, Y. D., &amp; Divya, A. (2022). LoRA based Indoor Localization using LPWAN Gateway and BLE Beacons. International Conference on Electronics and Renewable Systems (ICEARS), pp. 683–687."/>
+<meta name="citation_reference" content="https://doi.org/10.1109/ICEARS53579.2022.9751724"/>
+<meta name="citation_reference" content="Kulkarni, M. J., Ramamoorthy, M., Ramsankar, G., Vanathi, P., Bhagyalakshmi, V., &amp; Sathish, C. (2024). Sustainable Crop Monitoring and Management for Enhanced Agricultural Productivity Through IoT, AI &amp; ML: Case Studies and Innovations, pp. 182–199."/>
+<meta name="citation_reference" content="https://doi.org/10.1007/978-3-031-61471-2_13"/>
+<meta name="citation_reference" content="Lilhore, U. K., Imoize, A. L., Li, C.-T., Simaiya, S., Pani, S. K., Goyal, N., Kumar, A., &amp; Lee, C.C. (2022). Design and Implementation of an ML and IoT Based Adaptive Traffic-Management System for Smart Cities. Sensors, 22(8), 2908. https://doi.org/10.3390/s22082908"/>
+<meta name="citation_reference" content="Lin, D., Wang, Q., Min, W., Xu, J., &amp; Zhang, Z. (2021). A Survey on Energy-Efficient Strategies in Static Wireless Sensor Networks. ACM Transactions on Sensor Networks, 17(1), 1–48. https://doi.org/10.1145/3414315"/>
+<meta name="citation_reference" content="Liu, S., Ma, X., Jia, Y., &amp; Liu, Y. (2022). An Energy-Saving Task Scheduling Model via Greedy Strategy under Cloud Environment. Wireless Communications and Mobile Computing, 2022, 1–13. https://doi.org/10.1155/2022/8769674"/>
+<meta name="citation_reference" content="Liu, Z., Liu, J., Xu, X., &amp; Wu, K. (2024). DeepGPS: Deep Learning Enhanced GPS Positioning in Urban Canyons. IEEE Transactions on Mobile Computing, 23(1), 376–392. https://doi.org/10.1109/TMC.2022.3208240"/>
+<meta name="citation_reference" content="M.R., P., H.S., V., &amp; J., S. (2023). Holistic survey on energy-aware routing techniques for IoT applications. Journal of Network and Computer Applications, 213, 103584. https://doi.org/10.1016/j.jnca.2023.103584"/>
+<meta name="citation_reference" content="Ma, B., Liu, Z., Jiang, F., Zhao, W., Dang, Q., Wang, X., Zhang, J., &amp; Wang, L. (2023). Reinforcement learning based UAV formation control in GPS-denied environment. Chinese Journal of Aeronautics, 36(11), 281–296. https://doi.org/10.1016/j.cja.2023.07.006"/>
+<meta name="citation_reference" content="Mamatnabiyev, Z. (2022). Animal Tracking System Based on GPS Sensor and LPWAN. International Conference on Smart Information Systems and Technologies (SIST), pp. 1–4. https://doi.org/10.1109/SIST54437.2022.9945724"/>
+<meta name="citation_reference" content="Mao, W., Zhao, Z., Chang, Z., Min, G., &amp; Gao, W. (2021). Energy-Efficient Industrial Internet of Things: Overview and Open Issues. IEEE Transactions on Industrial Informatics, 17(11), 7225–7237. https://doi.org/10.1109/TII.2021.3067026"/>
+<meta name="citation_reference" content="Mane, V., Durge, H.A., &amp; Raut, S. (2024). IoT Based Location Alert and Controlling System for Animal Belts via Mobile Devices. International Journal of Computing and Digital Systems, 16(1), 1–10."/>
+<meta name="citation_reference" content="Marahatta, A., Pirbhulal, S., Zhang, F., Parizi, R. M., Choo, K.-K. R., &amp; Liu, Z. (2021a). Classification-Based and Energy-Efficient Dynamic Task Scheduling Scheme for Virtualized Cloud Data Center. IEEE Transactions on Cloud Computing, 9(4), 1376–1390. https://doi.org/10.1109/TCC.2019.2918226"/>
+<meta name="citation_reference" content="Meng, Q., Hussain, S., Luo, F., Wang, Z., &amp; Jin, X. (2024). An Online Reinforcement Learning-based Energy Management Strategy for Microgrids with Centralized Control. IEEE Transactions on Industry Applications, pp. 1–10. https://doi.org/10.1109/TIA.2024.3430264"/>
+<meta name="citation_reference" content="Mokni, M., Yassa, S., Hajlaoui, J. E., Omri, M. N., &amp; Chelouah, R. (2023). Multi-objective fuzzy approach to scheduling and offloading workflow tasks in Fog–Cloud computing. Simulation Modelling Practice and Theory, 123, 102687. https://doi.org/10.1016/j.simpat.2022.102687"/>
+<meta name="citation_reference" content="Moumen, I., Rafalia, N., Abouchabaka, J., &amp; Aoufi, M. (2023). Real-time GPS Tracking System for IoT-Enabled Connected Vehicles. E3S Web of Conferences, 412, 01095. https://doi.org/10.1051/e3sconf/202341201095"/>
+<meta name="citation_reference" content="Mukherjee, M., Kumar, S., Mavromoustakis, C. X., Mastorakis, G., Matam, R., Kumar, V., &amp; Zhang, Q. (2020). Latency-Driven Parallel Task Data Offloading in Fog Computing Networks for Industrial Applications. IEEE Transactions on Industrial Informatics, 16(9), 6050–6058."/>
+<meta name="citation_reference" content="https://doi.org/10.1109/TII.2019.2957129"/>
+<meta name="citation_reference" content="Naeem, S., Ali, A., Anam, S., &amp; Ahmed, M. M. (2023). An Unsupervised Machine Learning Algorithms: Comprehensive Review. International Journal of Computing and Digital Systems, 13(1), 911–921. https://doi.org/10.12785/ijcds/130172"/>
+<meta name="citation_reference" content="Noreen, U., Bounceur, A., &amp; Clavier, L. (2017). A study of LoRa low power and wide area network technology. International Conference on Advanced Technologies for Signal and Image Processing (ATSIP), 1–6. https://doi.org/10.1109/ATSIP.2017.8075570"/>
+<meta name="citation_reference" content="Pallier, D., Le Cam, V., &amp; Pillement, S. (2021). Energy-Efficient GPS Synchronization for Wireless Nodes. IEEE Sensors Journal, 21(4), 5221–5229. https://doi.org/10.1109/JSEN.2020.3031350"/>
+<meta name="citation_reference" content="Pandey, O. J., Yuvaraj, T., Paul, J. K., Nguyen, H. H., Gundepudi, K., &amp; Shukla, M. K. (2022). Improving Energy Efficiency and QoS of LPWANs for IoT Using Q-Learning Based Data Routing. IEEE Transactions on Cognitive Communications and Networking, 8(1), 365–379."/>
+<meta name="citation_reference" content="https://doi.org/10.1109/TCCN.2021.3114147"/>
+<meta name="citation_reference" content="Sadhukhan, P., Mukherjee, N., &amp; Das, P. K. (2021). Location-Based Services for Smart Living in Urban Areas, pp. 53–69."/>
+<meta name="citation_reference" content="https://doi.org/10.1007/978-3-030-71288-4_3"/>
+<meta name="citation_reference" content="Safa, M., Pandian, A., Kartick, T., Chakrapani, K., Geetha, G., &amp; Saranya, G. (2021). Hybrid Artificial Intelligence and IoT in Health care for Cardiovascular Patient in Decision-Making System, pp. 129–147. https://doi.org/10.1007/978-981-16-2972-3_7"/>
+<meta name="citation_reference" content="Samadi, R., Nazari, A., &amp; Seitz, J. (2023). Intelligent Energy-Aware Routing Protocol in Mobile IoT Networks Based on SDN. IEEE Transactions on Green Communications and Networking, 7(4), 2093–2103. https://doi.org/10.1109/TGCN.2023.3296272"/>
+<meta name="citation_reference" content="Saranya, G., &amp; Pravin, A. (2022). Hybrid Global Sensitivity Analysis Based Optimal Attribute Selection Using Classification Techniques by Machine Learning Algorithm. Wireless Personal Communications, 127(3), 2305–2324. https://doi.org/10.1007/s11277-021-08796-3"/>
+<meta name="citation_reference" content="Saurabh, K., Tripathi, M. M., &amp; Mahapatra, S. (2023). IoT Resources and Their Practical Application, A Comprehensive Study. International Journal on Recent and Innovation Trends in Computing and Communication, 11(10), 1530–1541. https://doi.org/10.17762/ijritcc.v11i10.8705"/>
+<meta name="citation_reference" content="Schmidtke, H. R. (2020). Location-aware systems or location-based services: a survey with applications to CoViD-19 contact tracking. Journal of Reliable Intelligent Environments, 6(4), 191–214. https://doi.org/10.1007/s40860-020-00111-4"/>
+<meta name="citation_reference" content="SNAP: Network datasets: Brightkite. (n.d.). https://snap.stanford.edu/data/loc-brightkite.html (last accessed on 13-10-2024)"/>
+<meta name="citation_reference" content="Suseendran, G., Akila, D., Vijaykumar, H., Jabeen, T. N., Nirmala, R., &amp; Nayyar, A. (2022). Multi-sensor information fusion for efficient smart transport vehicle tracking and positioning based on deep learning technique. The Journal of Supercomputing, 78(5), 6121–6146."/>
+<meta name="citation_reference" content="https://doi.org/10.1007/s11227-021-04115-6"/>
+<meta name="citation_reference" content="Talaei Khoei, T., &amp; Kaabouch, N. (2023). A Comparative Analysis of Supervised and Unsupervised Models for Detecting Attacks on the Intrusion Detection Systems. Information, 14(2), 103. https://doi.org/10.3390/info14020103"/>
+<meta name="citation_reference" content="Wang, H., Ye, Y., Zhang, J., &amp; Xu, B. (2023). A comparative study of 13 deep reinforcement learning based energy management methods for a hybrid electric vehicle. Energy, 266, 126497. https://doi.org/10.1016/j.energy.2022.126497"/>
+<meta name="citation_reference" content="Yadav, V. K., Verma, S., &amp; Venkatesan, S. (2022). Efficient and privacy-preserving location-based services over the cloud. Cluster Computing, 25(5), 3175–3192. https://doi.org/10.1007/s10586-021-03533-8"/>
+<meta name="citation_reference" content="Zantalis, F., Koulouras, G., Karabetsos, S., &amp; Kandris, D. (2019). A Review of Machine Learning and IoT in Smart Transportation. Future Internet, 11(4), 94. https://doi.org/10.3390/fi11040094"/>
+<meta name="citation_reference" content="Zhang, E., &amp; Masoud, N. (2021). Increasing GPS Localization Accuracy with Reinforcement Learning. IEEE Transactions on Intelligent Transportation Systems, 22(5), 2615–2626. https://doi.org/10.1109/TITS.2020.2972409"/>
+<meta name="citation_reference" content="Zhang, L., Chu, X., &amp; Zhai, M. (2023). Machine Learning-Based Integrated Wireless Sensing and Positioning for Cellular Network. IEEE Transactions on Instrumentation and Measurement, 72, 1–11. https://doi.org/10.1109/TIM.2022.3224513"/>
+<meta name="citation_reference" content="Zhao, Z., Alzubaidi, L., Zhang, J., Duan, Y., &amp; Gu, Y. (2024). A comparison review of transfer learning and self-supervised learning: Definitions, applications, advantages and limitations. Expert Systems with Applications, 242, 122807. https://doi.org/10.1016/j.eswa.2023.122807"/>
+<meta name="citation_reference" content="Zheng, Y., Fu, H., Xie, X., Ma, W., &amp; Li, Q. (2023). Geolife GPS trajectory dataset - User Guide - Microsoft Research. Microsoft Research."/>
+<meta name="citation_reference" content="https://www.microsoft.com/en-us/research/publication/geolife-gps-trajectory-dataset-user-guide/ (last accessed on 13-10-2024)"/>
+	<link rel="stylesheet" href="https://qtanalytics.in/journals/index.php/IJERR/$$$call$$$/page/page/css?name=stylesheet" type="text/css" /><link rel="stylesheet" href="https://qtanalytics.in/journals/index.php/IJERR/$$$call$$$/page/page/css?name=font" type="text/css" /><link rel="stylesheet" href="https://qtanalytics.in/journals/lib/pkp/styles/fontawesome/fontawesome.css?v=3.3.0.19" type="text/css" /><link rel="stylesheet" href="https://qtanalytics.in/journals/plugins/generic/citations/css/citations.css?v=3.3.0.19" type="text/css" /><link rel="stylesheet" href="https://qtanalytics.in/journals/public/journals/5/styleSheet.css?d=" type="text/css" />
+</head>
+<body class="pkp_page_article pkp_op_view" dir="ltr">
+
+	<div class="pkp_structure_page">
+
+				<header class="pkp_structure_head" id="headerNavigationContainer" role="banner">
+						
+ <nav class="cmp_skip_to_content" aria-label="Jump to content links">
+	<a href="#pkp_content_main">Skip to main content</a>
+	<a href="#siteNav">Skip to main navigation menu</a>
+		<a href="#pkp_content_footer">Skip to site footer</a>
+</nav>
+
+			<div class="pkp_head_wrapper">
+
+				<div class="pkp_site_name_wrapper">
+					<button class="pkp_site_nav_toggle">
+						<span>Open Menu</span>
+					</button>
+										<div class="pkp_site_name">
+																<a href="						https://qtanalytics.in/journals/index.php/IJERR/index
+					" class="is_text">International Journal of Experimental Research and Review</a>
+										</div>
+				</div>
+
+				
+				<nav class="pkp_site_nav_menu" aria-label="Site Navigation">
+					<a id="siteNav"></a>
+					<div class="pkp_navigation_primary_row">
+						<div class="pkp_navigation_primary_wrapper">
+																				<ul id="navigationPrimary" class="pkp_navigation_primary pkp_nav_list">
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/home">
+					Home
+				</a>
+							</li>
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/view">
+					View
+				</a>
+									<ul>
+																					<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/home_page">
+										Home Page
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/important-links-websites">
+										Important Links of Website
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/authors-guidelines">
+										Author's guidelines
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/reviewer-guidelines">
+										Reviewer Guidelines
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/additional-archiving-abstracting-and-indexing">
+										Additional Archiving, Abstracting & Indexing
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/time-of-publication">
+										Time of Publication
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/charges-for-article-processing">
+										Charges for Article Processing
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/impact-factor">
+										Impact Factor
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/crossmarkpolicy">
+										International Academic Publishing House (IAPH) CrossMark Policy
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/Acceptance_Rate_AR">
+										Acceptance Rate (AR)
+									</a>
+								</li>
+																		</ul>
+							</li>
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/about">
+					About
+				</a>
+									<ul>
+																					<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/about-the-journal">
+										About the Journal
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/aims-and-scope">
+										Aims & Scope
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/publication-policies">
+										Publication Policies
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/peer-review-process">
+										Peer Review Process
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/open-access-policy">
+										Open Access Policy
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/cope">
+										COPE
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/care">
+										CARE
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/misconduct-handling-complaints-process">
+										Misconduct Handling & Complaints process
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/privacy-statement">
+										Privacy Statement
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://iaph.in/international-journal-of-experimental-research-and-review-citation/">
+										Our Citations
+									</a>
+								</li>
+																		</ul>
+							</li>
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/editorial-board">
+					Editorial Board
+				</a>
+							</li>
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/online-submission">
+					Online Submission
+				</a>
+									<ul>
+																					<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/online-submission-procedure">
+										Online submission procedure
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/status-code">
+										Status code
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/copyright-form-template">
+										Copyright Form Template
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/cover-letter-cum-declaration-template">
+										Cover Letter Cum Declaration Template
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/revised-manuscript-template">
+										Revised Manuscript Template
+									</a>
+								</li>
+																												<li class="">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/sample-model-paper-pdf">
+										Sample / Model Paper (PDF)
+									</a>
+								</li>
+																		</ul>
+							</li>
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/issue/current">
+					Current
+				</a>
+							</li>
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/issue/archive">
+					Archives
+				</a>
+							</li>
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/contact-us">
+					Contact Us
+				</a>
+							</li>
+								<li class="">
+				<a href="http://www.iaph.co.in/">
+					Publishing House
+				</a>
+							</li>
+								<li class="">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/announcement">
+					Announcements
+				</a>
+							</li>
+			</ul>
+
+				
+
+																						<div class="pkp_navigation_search_wrapper">
+									<a href="https://qtanalytics.in/journals/index.php/IJERR/search" class="pkp_search pkp_search_desktop">
+										<span class="fa fa-search" aria-hidden="true"></span>
+										Search
+									</a>
+								</div>
+													</div>
+					</div>
+					<div class="pkp_navigation_user_wrapper" id="navigationUserWrapper">
+							<ul id="navigationUser" class="pkp_navigation_user pkp_nav_list">
+								<li class="profile">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/user/register">
+					Register
+				</a>
+							</li>
+								<li class="profile">
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/login">
+					Login
+				</a>
+							</li>
+										</ul>
+
+					</div>
+				</nav>
+			</div><!-- .pkp_head_wrapper -->
+		</header><!-- .pkp_structure_head -->
+
+						<div class="pkp_structure_content has_sidebar">
+			<div class="pkp_structure_main" role="main">
+				<a id="pkp_content_main"></a>
+
+<div class="page page_article">
+			<nav class="cmp_breadcrumbs" role="navigation" aria-label="You are here:">
+	<ol>
+		<li>
+			<a href="https://qtanalytics.in/journals/index.php/IJERR/index">
+				Home
+			</a>
+			<span class="separator">/</span>
+		</li>
+		<li>
+			<a href="https://qtanalytics.in/journals/index.php/IJERR/issue/archive">
+				Archives
+			</a>
+			<span class="separator">/</span>
+		</li>
+					<li>
+				<a href="https://qtanalytics.in/journals/index.php/IJERR/issue/view/249">
+					Vol. 47 (2025)
+				</a>
+				<span class="separator">/</span>
+			</li>
+				<li class="current" aria-current="page">
+			<span aria-current="page">
+									Articles
+							</span>
+		</li>
+	</ol>
+</nav>
+	
+		  	 <article class="obj_article_details">
+
+		
+	<h1 class="page_title">
+		Efficient Utilization of Energy in IoT Devices Using Machine Learning Algorithms
+	</h1>
+
+	
+	<div class="row">
+		<div class="main_entry">
+
+							<section class="item authors">
+					<h2 class="pkp_screen_reader">Authors</h2>
+					<ul class="authors">
+											<li>
+							<span class="name">
+								Kumar Saurabh
+							</span>
+															<span class="affiliation">
+									Department of Computer Science &amp; Engineering, Integral University, Lucknow, UP, India
+																	</span>
+																						<span class="orcid">
+																		<a href="https://orcid.org/0009-0009-2088-576X" target="_blank">
+										https://orcid.org/0009-0009-2088-576X
+									</a>
+								</span>
+													</li>
+											<li>
+							<span class="name">
+								Manish Madhava Tripathi
+							</span>
+															<span class="affiliation">
+									Department of Computer Science &amp; Engineering, Integral University, Lucknow, UP, India
+																	</span>
+																						<span class="orcid">
+																		<a href="https://orcid.org/0000-0003-3441-5733" target="_blank">
+										https://orcid.org/0000-0003-3441-5733
+									</a>
+								</span>
+													</li>
+											<li>
+							<span class="name">
+								Satyasundara Mahapatra
+							</span>
+															<span class="affiliation">
+									Department of Computer Science &amp; Engineering, Pranveer Singh Institute of Technology Kanpur, UP, India
+																	</span>
+																						<span class="orcid">
+																		<a href="https://orcid.org/0000-0002-9587-6659" target="_blank">
+										https://orcid.org/0000-0002-9587-6659
+									</a>
+								</span>
+													</li>
+										</ul>
+				</section>
+			
+																												<section class="item doi">
+						<h2 class="label">
+														DOI:
+						</h2>
+						<span class="value">
+							<a href="https://doi.org/10.52756/ijerr.2025.v47.011">
+								https://doi.org/10.52756/ijerr.2025.v47.011
+							</a>
+						</span>
+					</section>
+																
+									<section class="item keywords">
+				<h2 class="label">
+										Keywords:
+				</h2>
+				<span class="value">
+											Adaptive resource management, 											Energy efficiency, 											Energy-aware algorithms, 											Machine learning, 											Predictive modelling									</span>
+			</section>
+			
+										<section class="item abstract">
+					<h2 class="label">Abstract</h2>
+					<p>The expansion of the Internet of Things (IoT) has revolutionized various industries, allowing for the automation of processes, monitoring in real time, and smart decision-making. One of the most significant difficulties confronting IoT devices is energy efficiency, given that many operate on constrained power sources. This study describes the application of ML algorithms in the energy optimization of IoT devices and also analyzes currently available tools for energy efficiency improvement, including predictive modeling, adaptive resource distribution, and energy-aware algorithms. The proposed ML-based adaptive GPS scheduling algorithms show improvement in efficacy in terms of energy consumption and at the same time maintain positional accuracy.  This study compares and shows that using the flexible scheduling option is more energy-efficient, especially for users who have diverse patterns of mobility. Furthermore, this study also looks at the potential of ML approaches such as reinforcement learning, supervised learning, and unsupervised learning for predicting device usage, improving energy efficiency, and extending the battery life, which leads to reducing energy consumption while maintaining QoS.</p>
+				</section>
+			
+			
+
+																																	
+										<section class="item references">
+					<h2 class="label">
+						References
+					</h2>
+					<div class="value">
+																					<p>Abdulateef, A. T., &amp; Makki, S. A. (2023). A survey of indoor positioning system based-smartphone. AIP Conference Proceedings, 030005. <a href="https://doi.org/10.1063/5.0181876">https://doi.org/10.1063/5.0181876</a> </p>
+															<p>Aboelsoud, K., Diab, H. Y., Abdelsalam, M., &amp; Hegaze, M. M. (2024). An Efficient GPS Algorithm for Maximizing Electric Vehicle Range. Applied Sciences, 14(11), 4858. <a href="https://doi.org/10.3390/app14114858">https://doi.org/10.3390/app14114858</a> </p>
+															<p>Albraheem, L., Alshathri, H., Alsheddi, R., Alotaibi, R., &amp; Alkharashi, G. (2022). Hybrid asset localization using light fidelity and Bluetooth Low Energy. PLOS ONE, 17(9), e0274452. <a href="https://doi.org/10.1371/journal.pone.0274452">https://doi.org/10.1371/journal.pone.0274452</a> </p>
+															<p>Al-Fuqaha, A., Guizani, M., Mohammadi, M., Aledhari, M., &amp; Ayyash, M. (2015). Internet of Things: A Survey on Enabling Technologies, Protocols, and Applications. IEEE Communications Surveys &amp; Tutorials, 17(4), 2347–2376. <a href="https://doi.org/10.1109/COMST.2015.2444095">https://doi.org/10.1109/COMST.2015.2444095</a> </p>
+															<p>Amudha, S., &amp; Murali, M. (2021). Deep learning based energy efficient novel scheduling algorithms for body-fog-cloud in smart hospital. Journal of Ambient Intelligence and Humanized Computing, 12(7), 7441–7460. <a href="https://doi.org/10.1007/s12652-020-02421-0">https://doi.org/10.1007/s12652-020-02421-0</a> </p>
+															<p>Chen, Y.H. (2024). Adaptive Signal Control for Multimodal Traffic: Concurrently Offering Multi-Path Progression and Transit-Friendly Signal in Real-Time. IEEE Transactions on Intelligent Transportation Systems, 25(9), 10967–10982. <a href="https://doi.org/10.1109/TITS.2024.3361685">https://doi.org/10.1109/TITS.2024.3361685</a> </p>
+															<p>Cheng, Y. L., Lim, M. H., &amp; Hui, K. H. (2022). Impact of internet of things paradigm towards energy consumption prediction: A systematic literature review. Sustainable Cities and Society, 78, 103624. <a href="https://doi.org/10.1016/j.scs.2021.103624">https://doi.org/10.1016/j.scs.2021.103624</a> </p>
+															<p>Cheriyan, R., Abraham, J., Sree Sankar, E., Narayanan, S., &amp; Mathai, R. G. (2022). Nemo: Energy Efficient Location Tracker for Dementia Patients Using LoRaWAN and Adaptive GPS Duty Cycling Strategies, pp. 511–521. <a href="https://doi.org/10.1007/978-3-030-77528-5_27">https://doi.org/10.1007/978-3-030-77528-5_27</a> </p>
+															<p>Cui, L., Yang, S., Chen, F., Ming, Z., Lu, N., &amp; Qin, J. (2018). A survey on application of machine learning for Internet of Things. International Journal of Machine Learning and Cybernetics, 9(8), 1399–1417. <a href="https://doi.org/10.1007/s13042-018-0834-5">https://doi.org/10.1007/s13042-018-0834-5</a> </p>
+															<p>da Silva, D. G., &amp; Meneses, A. A. de M. (2023). Comparing Long Short-Term Memory (LSTM) and bidirectional LSTM deep neural networks for power consumption prediction. Energy Reports, 10, 3315–3334. <a href="https://doi.org/10.1016/j.egyr.2023.09.175">https://doi.org/10.1016/j.egyr.2023.09.175</a> </p>
+															<p>Dawn, N., Ghosh, T., Ghosh, S., Saha, A., Mukherjee, P., Sarkar, S., Guha, S., &amp; Sanyal, T. (2023). Implementation of Artificial Intelligence, Machine Learning, and Internet of Things (IoT) in revolutionizing Agriculture: A review on recent trends and challenges. Int. J. Exp. Res. Rev., 30, 190-218. <a href="https://doi.org/10.52756/ijerr.2023.v30.018">https://doi.org/10.52756/ijerr.2023.v30.018</a> </p>
+															<p>Deng, Z., Huang, D., Liu, J., Mi, B., &amp; Liu, Y. (2021). An Assessment Method for Traffic State Vulnerability Based on a Cloud Model for Urban Road Network Traffic Systems. IEEE Transactions on Intelligent Transportation Systems, 22(11), 7155–7168. <a href="https://doi.org/10.1109/TITS.2020.3002455">https://doi.org/10.1109/TITS.2020.3002455</a> </p>
+															<p>Ding, X., &amp; Wu, J. (2019). Study on Energy Consumption Optimization Scheduling for Internet of Things. IEEE Access, 7, 70574–70583. </p>
+															<p><a href="https://doi.org/10.1109/ACCESS.2019.2919769">https://doi.org/10.1109/ACCESS.2019.2919769</a> </p>
+															<p>Dublin Bus GPS sample data (Insight Project) from DCC - Dublin Bus GPS Data - data.smartdublin.ie. (n.d.). <a href="https://data.smartdublin.ie/dataset/dublin-bus-gps-sample-data-from-dublin-city-council-insight-project/resource/00c65697-9ed6-43cb-a2b7-9e20cf323cb3">https://data.smartdublin.ie/dataset/dublin-bus-gps-sample-data-from-dublin-city-council-insight-project/resource/00c65697-9ed6-43cb-a2b7-9e20cf323cb3</a> (last accessed on 13-10-2024) </p>
+															<p>Farid, Z., Nordin, R., Ismail, M., &amp; Abdullah, N. F. (2016). Hybrid Indoor-Based WLAN-WSN Localization Scheme for Improving Accuracy Based on Artificial Neural Network. Mobile Information Systems, 2016, 1–11. <a href="https://doi.org/10.1155/2016/6923931">https://doi.org/10.1155/2016/6923931</a> </p>
+															<p>Gangadharan, S., Khanam, R., &amp; Thangasamy, V. (2024). A Study of RF Power Amplifiers for 5G and Future Generation Mobile Communication: Can FinFET Replace CMOS? International Journal of Experimental Research and Review, 46, 222–239. <a href="https://doi.org/10.52756/ijerr.2024.v46.018">https://doi.org/10.52756/ijerr.2024.v46.018</a> </p>
+															<p>Gudumian, S., V, T. K., D, D., P, B., K B, B., &amp; G, V. S. (2024). Enhancing Electric Vehicle Performance and Connectivity through Internet of Things Integration. International Journal of Experimental Research and Review, 46, 45–57. <a href="https://doi.org/10.52756/ijerr.2024.v46.004">https://doi.org/10.52756/ijerr.2024.v46.004</a> </p>
+															<p>Gui, J., Chen, T., Zhang, J., Cao, Q., Sun, Z., Luo, H., &amp; Tao, D. (2024). A Survey on Self-Supervised Learning: Algorithms, Applications, and Future Trends. IEEE Transactions on Pattern Analysis and Machine Intelligence, 46(12), 9052–9071. <a href="https://doi.org/10.1109/TPAMI.2024.3415112">https://doi.org/10.1109/TPAMI.2024.3415112</a> </p>
+															<p>Hadwen, T., Smallbon, V., Zhang, Q., &amp; D’Souza, M. (2017). Energy efficient LoRa GPS tracker for dementia patients. 39th Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC), 771–774. <a href="https://doi.org/10.1109/EMBC.2017.8036938">https://doi.org/10.1109/EMBC.2017.8036938</a> </p>
+															<p>Haroon, M., Misra, D. K., Husain, M., Tripathi, M. M., &amp; Khan, A. (2023). Security Issues in the Internet of Things for the Development of Smart Cities, pp. 123–137. <a href="https://doi.org/10.4018/978-1-6684-8133-2.ch007">https://doi.org/10.4018/978-1-6684-8133-2.ch007</a> </p>
+															<p>Hisham, M., Elmogy, A., Sarhan, A., &amp; Sallam, A. (2020). Energy efficient scheduling in local area networks. Wireless Networks, 26(1), 685–698. <a href="https://doi.org/10.1007/s11276-019-02174-5">https://doi.org/10.1007/s11276-019-02174-5</a> </p>
+															<p>Ilyas, Q. M., &amp; Ahmad, M. (2020). Smart Farming: An Enhanced Pursuit of Sustainable Remote Livestock Tracking and Geofencing Using IoT and GPRS. Wireless Communications and Mobile Computing, 2020, 1–12. <a href="https://doi.org/10.1155/2020/6660733">https://doi.org/10.1155/2020/6660733</a> </p>
+															<p>Jain, N., Awasthi, Y., &amp; Jain, R. (2023). An IoT-based soil analysis system using optical sensors and multivariate regression. Int. J. Exp. Res. Rev., 31(Spl Volume), 23-32. <a href="https://doi.org/10.52756/10.52756/ijerr.2023.v31spl.003">https://doi.org/10.52756/10.52756/ijerr.2023.v31spl.003</a> </p>
+															<p>Jalalinejad, H., Rohani Hajiabadi, M., Asghar Rahmani Hosseinabadi, A., Mirkamali, S., Abraham, A., Weber, G.-W., &amp; Parikh, J. (2024). A Hybrid Multi-Hop Clustering and Energy-Aware Routing Protocol for Efficient Resource Management in Renewable Energy Harvesting Wireless Sensor Networks. IEEE Access, 12, 137310–137332. <a href="https://doi.org/10.1109/ACCESS.2024.3458795">https://doi.org/10.1109/ACCESS.2024.3458795</a> </p>
+															<p>Johnsana, A., Ganesh, G., Manjusri, S., Mahesh, P., &amp; Reddy, C. K. (2024). Intelligent traffic system for urban conditions using real-time vehicle tracking. International Journal of Information Technology and Computer Engineering, 12(1), 329–333. </p>
+															<p>Kanakaraja, P., Kotamraju, S. K., Nagulmeera, S., Reddy, Y. D., &amp; Divya, A. (2022). LoRA based Indoor Localization using LPWAN Gateway and BLE Beacons. International Conference on Electronics and Renewable Systems (ICEARS), pp. 683–687. </p>
+															<p><a href="https://doi.org/10.1109/ICEARS53579.2022.9751724">https://doi.org/10.1109/ICEARS53579.2022.9751724</a> </p>
+															<p>Kulkarni, M. J., Ramamoorthy, M., Ramsankar, G., Vanathi, P., Bhagyalakshmi, V., &amp; Sathish, C. (2024). Sustainable Crop Monitoring and Management for Enhanced Agricultural Productivity Through IoT, AI &amp; ML: Case Studies and Innovations, pp. 182–199. </p>
+															<p><a href="https://doi.org/10.1007/978-3-031-61471-2_13">https://doi.org/10.1007/978-3-031-61471-2_13</a> </p>
+															<p>Lilhore, U. K., Imoize, A. L., Li, C.-T., Simaiya, S., Pani, S. K., Goyal, N., Kumar, A., &amp; Lee, C.C. (2022). Design and Implementation of an ML and IoT Based Adaptive Traffic-Management System for Smart Cities. Sensors, 22(8), 2908. <a href="https://doi.org/10.3390/s22082908">https://doi.org/10.3390/s22082908</a> </p>
+															<p>Lin, D., Wang, Q., Min, W., Xu, J., &amp; Zhang, Z. (2021). A Survey on Energy-Efficient Strategies in Static Wireless Sensor Networks. ACM Transactions on Sensor Networks, 17(1), 1–48. <a href="https://doi.org/10.1145/3414315">https://doi.org/10.1145/3414315</a> </p>
+															<p>Liu, S., Ma, X., Jia, Y., &amp; Liu, Y. (2022). An Energy-Saving Task Scheduling Model via Greedy Strategy under Cloud Environment. Wireless Communications and Mobile Computing, 2022, 1–13. <a href="https://doi.org/10.1155/2022/8769674">https://doi.org/10.1155/2022/8769674</a> </p>
+															<p>Liu, Z., Liu, J., Xu, X., &amp; Wu, K. (2024). DeepGPS: Deep Learning Enhanced GPS Positioning in Urban Canyons. IEEE Transactions on Mobile Computing, 23(1), 376–392. <a href="https://doi.org/10.1109/TMC.2022.3208240">https://doi.org/10.1109/TMC.2022.3208240</a> </p>
+															<p>M.R., P., H.S., V., &amp; J., S. (2023). Holistic survey on energy-aware routing techniques for IoT applications. Journal of Network and Computer Applications, 213, 103584. <a href="https://doi.org/10.1016/j.jnca.2023.103584">https://doi.org/10.1016/j.jnca.2023.103584</a> </p>
+															<p>Ma, B., Liu, Z., Jiang, F., Zhao, W., Dang, Q., Wang, X., Zhang, J., &amp; Wang, L. (2023). Reinforcement learning based UAV formation control in GPS-denied environment. Chinese Journal of Aeronautics, 36(11), 281–296. <a href="https://doi.org/10.1016/j.cja.2023.07.006">https://doi.org/10.1016/j.cja.2023.07.006</a> </p>
+															<p>Mamatnabiyev, Z. (2022). Animal Tracking System Based on GPS Sensor and LPWAN. International Conference on Smart Information Systems and Technologies (SIST), pp. 1–4. <a href="https://doi.org/10.1109/SIST54437.2022.9945724">https://doi.org/10.1109/SIST54437.2022.9945724</a> </p>
+															<p>Mao, W., Zhao, Z., Chang, Z., Min, G., &amp; Gao, W. (2021). Energy-Efficient Industrial Internet of Things: Overview and Open Issues. IEEE Transactions on Industrial Informatics, 17(11), 7225–7237. <a href="https://doi.org/10.1109/TII.2021.3067026">https://doi.org/10.1109/TII.2021.3067026</a> </p>
+															<p>Mane, V., Durge, H.A., &amp; Raut, S. (2024). IoT Based Location Alert and Controlling System for Animal Belts via Mobile Devices. International Journal of Computing and Digital Systems, 16(1), 1–10. </p>
+															<p>Marahatta, A., Pirbhulal, S., Zhang, F., Parizi, R. M., Choo, K.-K. R., &amp; Liu, Z. (2021a). Classification-Based and Energy-Efficient Dynamic Task Scheduling Scheme for Virtualized Cloud Data Center. IEEE Transactions on Cloud Computing, 9(4), 1376–1390. <a href="https://doi.org/10.1109/TCC.2019.2918226">https://doi.org/10.1109/TCC.2019.2918226</a> </p>
+															<p>Meng, Q., Hussain, S., Luo, F., Wang, Z., &amp; Jin, X. (2024). An Online Reinforcement Learning-based Energy Management Strategy for Microgrids with Centralized Control. IEEE Transactions on Industry Applications, pp. 1–10. <a href="https://doi.org/10.1109/TIA.2024.3430264">https://doi.org/10.1109/TIA.2024.3430264</a> </p>
+															<p>Mokni, M., Yassa, S., Hajlaoui, J. E., Omri, M. N., &amp; Chelouah, R. (2023). Multi-objective fuzzy approach to scheduling and offloading workflow tasks in Fog–Cloud computing. Simulation Modelling Practice and Theory, 123, 102687. <a href="https://doi.org/10.1016/j.simpat.2022.102687">https://doi.org/10.1016/j.simpat.2022.102687</a> </p>
+															<p>Moumen, I., Rafalia, N., Abouchabaka, J., &amp; Aoufi, M. (2023). Real-time GPS Tracking System for IoT-Enabled Connected Vehicles. E3S Web of Conferences, 412, 01095. <a href="https://doi.org/10.1051/e3sconf/202341201095">https://doi.org/10.1051/e3sconf/202341201095</a> </p>
+															<p>Mukherjee, M., Kumar, S., Mavromoustakis, C. X., Mastorakis, G., Matam, R., Kumar, V., &amp; Zhang, Q. (2020). Latency-Driven Parallel Task Data Offloading in Fog Computing Networks for Industrial Applications. IEEE Transactions on Industrial Informatics, 16(9), 6050–6058. </p>
+															<p><a href="https://doi.org/10.1109/TII.2019.2957129">https://doi.org/10.1109/TII.2019.2957129</a> </p>
+															<p>Naeem, S., Ali, A., Anam, S., &amp; Ahmed, M. M. (2023). An Unsupervised Machine Learning Algorithms: Comprehensive Review. International Journal of Computing and Digital Systems, 13(1), 911–921. <a href="https://doi.org/10.12785/ijcds/130172">https://doi.org/10.12785/ijcds/130172</a> </p>
+															<p>Noreen, U., Bounceur, A., &amp; Clavier, L. (2017). A study of LoRa low power and wide area network technology. International Conference on Advanced Technologies for Signal and Image Processing (ATSIP), 1–6. <a href="https://doi.org/10.1109/ATSIP.2017.8075570">https://doi.org/10.1109/ATSIP.2017.8075570</a> </p>
+															<p>Pallier, D., Le Cam, V., &amp; Pillement, S. (2021). Energy-Efficient GPS Synchronization for Wireless Nodes. IEEE Sensors Journal, 21(4), 5221–5229. <a href="https://doi.org/10.1109/JSEN.2020.3031350">https://doi.org/10.1109/JSEN.2020.3031350</a> </p>
+															<p>Pandey, O. J., Yuvaraj, T., Paul, J. K., Nguyen, H. H., Gundepudi, K., &amp; Shukla, M. K. (2022). Improving Energy Efficiency and QoS of LPWANs for IoT Using Q-Learning Based Data Routing. IEEE Transactions on Cognitive Communications and Networking, 8(1), 365–379. </p>
+															<p><a href="https://doi.org/10.1109/TCCN.2021.3114147">https://doi.org/10.1109/TCCN.2021.3114147</a> </p>
+															<p>Sadhukhan, P., Mukherjee, N., &amp; Das, P. K. (2021). Location-Based Services for Smart Living in Urban Areas, pp. 53–69. </p>
+															<p><a href="https://doi.org/10.1007/978-3-030-71288-4_3">https://doi.org/10.1007/978-3-030-71288-4_3</a> </p>
+															<p>Safa, M., Pandian, A., Kartick, T., Chakrapani, K., Geetha, G., &amp; Saranya, G. (2021). Hybrid Artificial Intelligence and IoT in Health care for Cardiovascular Patient in Decision-Making System, pp. 129–147. <a href="https://doi.org/10.1007/978-981-16-2972-3_7">https://doi.org/10.1007/978-981-16-2972-3_7</a> </p>
+															<p>Samadi, R., Nazari, A., &amp; Seitz, J. (2023). Intelligent Energy-Aware Routing Protocol in Mobile IoT Networks Based on SDN. IEEE Transactions on Green Communications and Networking, 7(4), 2093–2103. <a href="https://doi.org/10.1109/TGCN.2023.3296272">https://doi.org/10.1109/TGCN.2023.3296272</a> </p>
+															<p>Saranya, G., &amp; Pravin, A. (2022). Hybrid Global Sensitivity Analysis Based Optimal Attribute Selection Using Classification Techniques by Machine Learning Algorithm. Wireless Personal Communications, 127(3), 2305–2324. <a href="https://doi.org/10.1007/s11277-021-08796-3">https://doi.org/10.1007/s11277-021-08796-3</a> </p>
+															<p>Saurabh, K., Tripathi, M. M., &amp; Mahapatra, S. (2023). IoT Resources and Their Practical Application, A Comprehensive Study. International Journal on Recent and Innovation Trends in Computing and Communication, 11(10), 1530–1541. <a href="https://doi.org/10.17762/ijritcc.v11i10.8705">https://doi.org/10.17762/ijritcc.v11i10.8705</a> </p>
+															<p>Schmidtke, H. R. (2020). Location-aware systems or location-based services: a survey with applications to CoViD-19 contact tracking. Journal of Reliable Intelligent Environments, 6(4), 191–214. <a href="https://doi.org/10.1007/s40860-020-00111-4">https://doi.org/10.1007/s40860-020-00111-4</a> </p>
+															<p>SNAP: Network datasets: Brightkite. (n.d.). <a href="https://snap.stanford.edu/data/loc-brightkite.html">https://snap.stanford.edu/data/loc-brightkite.html</a> (last accessed on 13-10-2024) </p>
+															<p>Suseendran, G., Akila, D., Vijaykumar, H., Jabeen, T. N., Nirmala, R., &amp; Nayyar, A. (2022). Multi-sensor information fusion for efficient smart transport vehicle tracking and positioning based on deep learning technique. The Journal of Supercomputing, 78(5), 6121–6146. </p>
+															<p><a href="https://doi.org/10.1007/s11227-021-04115-6">https://doi.org/10.1007/s11227-021-04115-6</a> </p>
+															<p>Talaei Khoei, T., &amp; Kaabouch, N. (2023). A Comparative Analysis of Supervised and Unsupervised Models for Detecting Attacks on the Intrusion Detection Systems. Information, 14(2), 103. <a href="https://doi.org/10.3390/info14020103">https://doi.org/10.3390/info14020103</a> </p>
+															<p>Wang, H., Ye, Y., Zhang, J., &amp; Xu, B. (2023). A comparative study of 13 deep reinforcement learning based energy management methods for a hybrid electric vehicle. Energy, 266, 126497. <a href="https://doi.org/10.1016/j.energy.2022.126497">https://doi.org/10.1016/j.energy.2022.126497</a> </p>
+															<p>Yadav, V. K., Verma, S., &amp; Venkatesan, S. (2022). Efficient and privacy-preserving location-based services over the cloud. Cluster Computing, 25(5), 3175–3192. <a href="https://doi.org/10.1007/s10586-021-03533-8">https://doi.org/10.1007/s10586-021-03533-8</a> </p>
+															<p>Zantalis, F., Koulouras, G., Karabetsos, S., &amp; Kandris, D. (2019). A Review of Machine Learning and IoT in Smart Transportation. Future Internet, 11(4), 94. <a href="https://doi.org/10.3390/fi11040094">https://doi.org/10.3390/fi11040094</a> </p>
+															<p>Zhang, E., &amp; Masoud, N. (2021). Increasing GPS Localization Accuracy with Reinforcement Learning. IEEE Transactions on Intelligent Transportation Systems, 22(5), 2615–2626. <a href="https://doi.org/10.1109/TITS.2020.2972409">https://doi.org/10.1109/TITS.2020.2972409</a> </p>
+															<p>Zhang, L., Chu, X., &amp; Zhai, M. (2023). Machine Learning-Based Integrated Wireless Sensing and Positioning for Cellular Network. IEEE Transactions on Instrumentation and Measurement, 72, 1–11. <a href="https://doi.org/10.1109/TIM.2022.3224513">https://doi.org/10.1109/TIM.2022.3224513</a> </p>
+															<p>Zhao, Z., Alzubaidi, L., Zhang, J., Duan, Y., &amp; Gu, Y. (2024). A comparison review of transfer learning and self-supervised learning: Definitions, applications, advantages and limitations. Expert Systems with Applications, 242, 122807. <a href="https://doi.org/10.1016/j.eswa.2023.122807">https://doi.org/10.1016/j.eswa.2023.122807</a> </p>
+															<p>Zheng, Y., Fu, H., Xie, X., Ma, W., &amp; Li, Q. (2023). Geolife GPS trajectory dataset - User Guide - Microsoft Research. Microsoft Research. </p>
+															<p><a href="https://www.microsoft.com/en-us/research/publication/geolife-gps-trajectory-dataset-user-guide/">https://www.microsoft.com/en-us/research/publication/geolife-gps-trajectory-dataset-user-guide/</a> (last accessed on 13-10-2024) </p>
+																		</div>
+				</section>
+			
+		</div><!-- .main_entry -->
+
+		<div class="entry_details">
+
+										<div class="item cover_image">
+					<div class="sub_item">
+													<a href="https://qtanalytics.in/journals/index.php/IJERR/issue/view/249">
+								<img src="https://qtanalytics.in/journals/public/journals/5/cover_issue_249_en_US.jpg" alt="">
+							</a>
+											</div>
+				</div>
+			
+										<div class="item galleys">
+					<h2 class="pkp_screen_reader">
+						Downloads
+					</h2>
+					<ul class="value galleys_links">
+													<li>
+								
+	
+							
+
+<a class="obj_galley_link pdf" href="https://qtanalytics.in/journals/index.php/IJERR/article/view/4332/2523">
+
+		
+	PDF
+
+	</a>
+							</li>
+													<li>
+								
+	
+							
+
+<a class="obj_galley_link file" href="https://qtanalytics.in/journals/index.php/IJERR/article/view/4332/2524">
+
+		
+	Check for updates
+
+	</a>
+							</li>
+											</ul>
+				</div>
+						
+						<div class="item published">
+				<section class="sub_item">
+					<h2 class="label">
+						Published
+					</h2>
+					<div class="value">
+																			<span>2025-04-30</span>
+																	</div>
+				</section>
+							</div>
+			
+										<div class="item citation">
+					<section class="sub_item citation_display">
+						<h2 class="label">
+							How to Cite
+						</h2>
+						<div class="value">
+							<div id="citationOutput" role="region" aria-live="polite">
+								<div class="csl-bib-body">
+  <div class="csl-entry">Saurabh, K., Tripathi, M. M., &#38; Mahapatra, S. (2025). Efficient Utilization of Energy in IoT Devices Using Machine Learning Algorithms. <i>International Journal of Experimental Research and Review</i>, <i>47</i>, 133–145. https://doi.org/10.52756/ijerr.2025.v47.011</div>
+</div>
+							</div>
+							<div class="citation_formats">
+								<button class="cmp_button citation_formats_button" aria-controls="cslCitationFormats" aria-expanded="false" data-csl-dropdown="true">
+									More Citation Formats
+								</button>
+								<div id="cslCitationFormats" class="citation_formats_list" aria-hidden="true">
+									<ul class="citation_formats_styles">
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/acm-sig-proceedings?submissionId=4332&amp;publicationId=4296"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/acm-sig-proceedings?submissionId=4332&amp;publicationId=4296&amp;return=json"
+												>
+													ACM
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/acs-nano?submissionId=4332&amp;publicationId=4296"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/acs-nano?submissionId=4332&amp;publicationId=4296&amp;return=json"
+												>
+													ACS
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/apa?submissionId=4332&amp;publicationId=4296"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/apa?submissionId=4332&amp;publicationId=4296&amp;return=json"
+												>
+													APA
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/associacao-brasileira-de-normas-tecnicas?submissionId=4332&amp;publicationId=4296"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/associacao-brasileira-de-normas-tecnicas?submissionId=4332&amp;publicationId=4296&amp;return=json"
+												>
+													ABNT
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/chicago-author-date?submissionId=4332&amp;publicationId=4296"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/chicago-author-date?submissionId=4332&amp;publicationId=4296&amp;return=json"
+												>
+													Chicago
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/harvard-cite-them-right?submissionId=4332&amp;publicationId=4296"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/harvard-cite-them-right?submissionId=4332&amp;publicationId=4296&amp;return=json"
+												>
+													Harvard
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/ieee?submissionId=4332&amp;publicationId=4296"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/ieee?submissionId=4332&amp;publicationId=4296&amp;return=json"
+												>
+													IEEE
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/modern-language-association?submissionId=4332&amp;publicationId=4296"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/modern-language-association?submissionId=4332&amp;publicationId=4296&amp;return=json"
+												>
+													MLA
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/turabian-fullnote-bibliography?submissionId=4332&amp;publicationId=4296"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/turabian-fullnote-bibliography?submissionId=4332&amp;publicationId=4296&amp;return=json"
+												>
+													Turabian
+												</a>
+											</li>
+																					<li>
+												<a
+													aria-controls="citationOutput"
+													href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/vancouver?submissionId=4332&amp;publicationId=4296"
+													data-load-citation
+													data-json-href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/get/vancouver?submissionId=4332&amp;publicationId=4296&amp;return=json"
+												>
+													Vancouver
+												</a>
+											</li>
+																			</ul>
+																			<div class="label">
+											Download Citation
+										</div>
+										<ul class="citation_formats_styles">
+																							<li>
+													<a href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/download/ris?submissionId=4332&amp;publicationId=4296">
+														<span class="fa fa-download"></span>
+														Endnote/Zotero/Mendeley (RIS)
+													</a>
+												</li>
+																							<li>
+													<a href="https://qtanalytics.in/journals/index.php/IJERR/citationstylelanguage/download/bibtex?submissionId=4332&amp;publicationId=4296">
+														<span class="fa fa-download"></span>
+														BibTeX
+													</a>
+												</li>
+																					</ul>
+																	</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			
+										<div class="item issue">
+
+											<section class="sub_item">
+							<h2 class="label">
+								Issue
+							</h2>
+							<div class="value">
+								<a class="title" href="https://qtanalytics.in/journals/index.php/IJERR/issue/view/249">
+									Vol. 47 (2025)
+								</a>
+							</div>
+						</section>
+					
+											<section class="sub_item">
+							<h2 class="label">
+								Section
+							</h2>
+							<div class="value">
+								Articles
+							</div>
+						</section>
+					
+									</div>
+			
+																														
+										<div class="item copyright">
+					<h2 class="label">
+						License
+					</h2>
+																										<p>Copyright (c) 2025 International Academic Publishing House (IAPH)</p>
+														<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" src="//i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><p>This work is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.</p>
+																
+				</div>
+			
+			<div class="item citations-container" data-image-path="https://qtanalytics.in/journals/plugins/generic/citations/images/" data-citations-url="https://qtanalytics.in/journals/index.php/IJERR/citations/get?citationsId=10.52756%2Fijerr.2025.v47.011&amp;citationsShowList=&amp;citationsProvider=all"
+     data-citations-provider="all" data-citations-total="" data-citations-list=""
+     data-show-google="1" data-show-pmc="0">
+	<div id="citations-loader"></div>
+	<div class="citations-count">
+		<div class="citations-count-crossref">
+			<img class="img-fluid" src="https://qtanalytics.in/journals/plugins/generic/citations/images/crossref.png" alt="Crossref"/>
+			<div class="badge_total"></div>
+		</div>
+		<div class="citations-count-scopus">
+			<img src="https://qtanalytics.in/journals/plugins/generic/citations/images/scopus.png" alt="Scopus"/>
+			<br/>
+			<span class="badge_total"></span>
+		</div>
+		<div class="citations-count-google">
+			<a href="https://scholar.google.com/scholar?q=10.52756/ijerr.2025.v47.011" target="_blank" rel="noreferrer">
+				<img src="https://qtanalytics.in/journals/plugins/generic/citations/images/scholar.png" alt="Google Scholar"/>
+			</a>
+		</div>
+		<div class="citations-count-pmc">
+			<a href="http://europepmc.org/search?scope=fulltext&query=(REF:10.52756/ijerr.2025.v47.011)" target="_blank" rel="noreferrer">
+				<img src="https://qtanalytics.in/journals/plugins/generic/citations/images/pmc.png" alt="Europe PMC"/>
+				<br/>
+				<span class="badge_total"></span>
+			</a>
+		</div>
+	</div>
+	<div class="citations-list"></div>
+    </div>
+
+
+		</div><!-- .entry_details -->
+	</div><!-- .row -->
+
+</article>
+
+	<div id="articlesBySameAuthorList">
+						<h3>Most read articles by the same author(s)</h3>
+
+			<ul>
+																													<li>
+													Rohit Srivastava,
+													Manish Madhava Tripathi,
+												<a href="https://qtanalytics.in/journals/index.php/IJERR/article/view/2580">
+							Systematic Exploration Using Intelligent Computing Techniques for Clinical Diagnosis of Gastrointestinal Disorder: A Review
+						</a>,
+						<a href="https://qtanalytics.in/journals/index.php/IJERR/issue/view/162">
+							International Journal of Experimental Research and Review: Vol. 36 (2023)
+						</a>
+					</li>
+							</ul>
+			<div id="articlesBySameAuthorPages">
+				
+			</div>
+			</div>
+
+
+</div><!-- .page -->
+
+	</div><!-- pkp_structure_main -->
+
+									<div class="pkp_structure_sidebar left" role="complementary" aria-label="Sidebar">
+				 
+<div class="pkp_block block_make_submission">
+	<h2 class="pkp_screen_reader">
+		Make a Submission
+	</h2>
+
+	<div class="content">
+		<a class="block_make_submission_link" href="https://qtanalytics.in/journals/index.php/IJERR/about/submissions">
+			Make a Submission
+		</a>
+	</div>
+</div>
+<div class="pkp_block block_Keywordcloud">
+	<h2 class="title">Keywords</h2>
+	<div class="content" id='wordcloud'></div>
+
+	<script>
+		function randomColor() {
+			var cores = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
+			return cores[Math.floor(Math.random()*cores.length)];
+		}
+
+					document.addEventListener("DOMContentLoaded", function() {
+				var keywords = [{"text":"powder metallurgy","size":1},{"text":"w\u2013cu composites","size":1},{"text":"fabrication","size":1},{"text":"mechanical properties","size":1},{"text":"aisi h13 tool steel","size":1},{"text":"full factorial method","size":1},{"text":"gas nitriding","size":1},{"text":"surface hardening","size":1},{"text":"tribomete","size":1},{"text":"anova","size":1},{"text":"tio2","size":1},{"text":"wear rate","size":1},{"text":"signal to noise ratio","size":1},{"text":"co\u2082 emissions","size":1},{"text":"economic growth","size":1},{"text":"environmental kuznets curve","size":1},{"text":"foreign direct investment","size":1},{"text":"health expenditure per capita","size":1},{"text":"trade openness","size":1},{"text":"cancer chemotherapy","size":1},{"text":"metallodrugs","size":1},{"text":"cisplatin","size":1},{"text":"apoptosis","size":1},{"text":"cancer cells","size":1},{"text":"competition functions","size":1},{"text":"groundnut","size":1},{"text":"ntercropping","size":1},{"text":"pearl millet","size":1},{"text":"spatial arrangement","size":1},{"text":"iot security","size":1},{"text":"encryption","size":1},{"text":"cyber threats","size":1},{"text":"data security","size":1},{"text":"authentication","size":1},{"text":"security solutions","size":1},{"text":"black spot identification","size":1},{"text":"urban traffic accident prediction","size":1},{"text":"traffic safety management","size":1},{"text":"statistical methods","size":1},{"text":"machine learning approaches","size":1},{"text":"child health","size":1},{"text":"family planning","size":1},{"text":"health","size":1},{"text":"healthcare services","size":1},{"text":"maharashtra","size":1},{"text":"maternal health","size":1},{"text":"deep learning","size":1},{"text":"environmental data","size":1},{"text":"temperature prediction","size":1},{"text":"time series forecasting","size":1}];
+				var totalWeight = 0;
+				var width = 300;
+				var height = 200;
+				var transitionDuration = 200;	
+				var length_keywords = keywords.length;
+				var layout = d3.layout.cloud();
+
+				layout.size([width, height])
+					.words(keywords)
+					.fontSize(function(d)
+					{
+						return fontSize(+d.size);
+					})
+					.on('end', draw);
+				
+				var svg = d3.select("#wordcloud").append("svg")
+					.attr("viewBox", "0 0 " + width + " " + height)	
+					.attr("width", '100%');		
+				
+				function update() {
+					var words = layout.words();
+					fontSize = d3.scaleLinear().range([16, 34]);
+					if (words.length) {
+						fontSize.domain([+words[words.length - 1].size || 1, +words[0].size]);
+					}
+				}
+				
+				keywords.forEach(function(item,index){totalWeight += item.size;});
+
+				update();
+
+				function draw(words, bounds) {
+					var w = layout.size()[0],
+						h = layout.size()[1];
+
+					scaling = bounds
+						? Math.min(
+							w / Math.abs(bounds[1].x - w / 2),
+							w / Math.abs(bounds[0].x - w / 2),
+							h / Math.abs(bounds[1].y - h / 2),
+							h / Math.abs(bounds[0].y - h / 2),
+						) / 2
+						: 1;
+
+					svg
+					.append("g")
+					.attr(
+						"transform",
+						"translate(" + [w >> 1, h >> 1] + ")scale(" + scaling + ")",
+					)
+					.selectAll("text")
+						.data(words)
+					.enter().append("text")
+						.style("font-size", function(d) { return d.size + "px"; })
+						.style("font-family", 'serif')
+						.style("fill", randomColor)
+						.style('cursor', 'pointer')
+						.style('opacity', 0.7)
+						.attr('class', 'keyword')
+						.attr("text-anchor", "middle")
+						.attr("transform", function(d) {
+							return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+						}) 
+						.text(function(d) { return d.text; })
+						.on("click", function(d, i){
+							window.location = "https://qtanalytics.in/journals/index.php/IJERR/search?query=QUERY_SLUG".replace(/QUERY_SLUG/, encodeURIComponent(''+d.text+''));
+						})
+						.on("mouseover", function(d, i) {
+							d3.select(this).transition()
+								.duration(transitionDuration)
+								.style('font-size',function(d) { return (d.size + 3) + "px"; })
+								.style('opacity', 1);
+						})
+						.on("mouseout", function(d, i) {
+							d3.select(this).transition()
+								.duration(transitionDuration)
+								.style('font-size',function(d) { return d.size + "px"; })
+								.style('opacity', 0.7);
+						})
+						.on('resize', function() { update() });
+				}
+
+				layout.start();
+
+			});
+			</script>
+</div>
+<div class="pkp_block block_custom" id="customblock-indexing">
+	<h2 class="title pkp_screen_reader">indexing</h2>
+	<div class="content">
+		<p style="text-align: center;"><span style="text-decoration: underline;"><strong>Click to view us on the world's database - </strong></span></p>
+<p style="text-align: center;"><a title="Academia.edu" href="https://wbsubregistration.academia.edu/InternationalJournalofExperimentalResearchandReviewIAPH" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/ae.png" alt="academia_edu"></a></p>
+<p style="text-align: center;"><a title="DOI &amp; CrossRef" href="https://search.crossref.org/?q=2455-4855&amp;from_ui=yes%20" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/CR_doi.png" alt="doi and crossref" width="300" height="75"></a></p>
+<p style="text-align: center;"><a title="Check Update" href="https://qtanalytics.in/journals/index.php/IJERR/crossmarkpolicy" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/CU.png" alt="check update"></a></p>
+<p style="text-align: center;"><a title="EuroPub" href="https://europub.co.uk/journals/international-journal-of-experimental-research-and-review-J-29269" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/EP.png" alt="EuroPub"></a></p>
+<p style="text-align: center;"><a title="Google Scholar" href="https://scholar.google.com/citations?hl=en&amp;user=C_RSGo8AAAAJ&amp;scilu=&amp;scisig=AMD79ooAAAAAYJFPJwVUjnSdHJMirwAuM1AE9Xyt29Qf&amp;gmla=AJsN-F6C6FOcC1BVTsciMh_jJzbvDlMEAG7iXtc54pVkOEW1hM7YEYd0LOg2Y8qtljAtMcH7BVFXYAhy5RDj-qOlv86g_Xbpuk9zP4-L0jeteDVxAP9q5gI4HuzCkta1GM4nN1_wzT3Z&amp;sciund=9397875962564903239" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/GS.png" alt="Google Scholar"></a></p>
+<p style="text-align: center;"><a title="Internet Archive" href="https://archive.org/details/@international_journal_of_experimental_research_and_review" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/iA.png" alt="Internet Archive"></a></p>
+<p style="text-align: center;"><a title="ICMJE" href="https://www.icmje.org/journals-following-the-icmje-recommendations/" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/icmje.png" alt="ICMJE"></a></p>
+<p style="text-align: center;"><a title="INDEX COPERNICUS" href="https://journals.indexcopernicus.com/search/journal/issue?issueId=all&amp;journalId=122825" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/INDEX_COPERNICUS.png" alt="index_copernicus" width="310" height="77"></a></p>
+<p style="text-align: center;">&nbsp;</p>
+	</div>
+</div>
+<div class="pkp_block block_custom" id="customblock-ar">
+	<h2 class="title pkp_screen_reader">ar</h2>
+	<div class="content">
+		<p><a title="Acceptance Rate (AR)" href="https://qtanalytics.in/journals/index.php/IJERR/Acceptance_Rate_AR" target="_blank" rel="noopener"><img src="/journals/public/site/images/chiefeditoriaph/AR2.png" width="315" height="85"></a></p>
+	</div>
+</div>
+
+			</div><!-- pkp_sidebar.left -->
+			</div><!-- pkp_structure_content -->
+
+<div class="pkp_structure_footer_wrapper" role="contentinfo">
+	<a id="pkp_content_footer"></a>
+
+	<div class="pkp_structure_footer">
+
+					<div class="pkp_footer_content">
+				<p><strong>Find International Journal of Experimental Research and Review on -</strong>  <a href="https://www.facebook.com/iaph.official/" target="_blank" rel="noopener">Facebook</a> | <a href="https://twitter.com/iaph_journal">Twitter</a> | <a href="https://www.linkedin.com/in/international-academic-publishing-house-3b0456258/?original_referer=" target="_blank" rel="noopener">Linkedin</a> <br />Copyright © 2023 International Academic Publishing House (IAPH)</p>
+<p><a href="https://info.flagcounter.com/qlQV"><img src="https://s11.flagcounter.com/count2/qlQV/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_12/viewers_3/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" width="162" height="47" border="0" /></a><img src="https://qtanalytics.in/journals/public/site/images/chiefeditoriaph/barcode.png" alt="Bar codes" width="78" height="27" /></p>
+			</div>
+		
+		<div class="pkp_brand_footer" role="complementary">
+			<a href="https://qtanalytics.in/journals/index.php/IJERR/about/aboutThisPublishingSystem">
+				<img alt="More information about the publishing system, Platform and Workflow by OJS/PKP." src="https://qtanalytics.in/journals/templates/images/ojs_brand.png">
+			</a>
+		</div>
+	</div>
+</div><!-- pkp_structure_footer_wrapper -->
+
+</div><!-- pkp_structure_page -->
+
+<script src="https://qtanalytics.in/journals/lib/pkp/lib/vendor/components/jquery/jquery.min.js?v=3.3.0.19" type="text/javascript"></script><script src="https://qtanalytics.in/journals/lib/pkp/lib/vendor/components/jqueryui/jquery-ui.min.js?v=3.3.0.19" type="text/javascript"></script><script src="https://qtanalytics.in/journals/plugins/themes/default/js/lib/popper/popper.js?v=3.3.0.19" type="text/javascript"></script><script src="https://qtanalytics.in/journals/plugins/themes/default/js/lib/bootstrap/util.js?v=3.3.0.19" type="text/javascript"></script><script src="https://qtanalytics.in/journals/plugins/themes/default/js/lib/bootstrap/dropdown.js?v=3.3.0.19" type="text/javascript"></script><script src="https://qtanalytics.in/journals/plugins/themes/default/js/main.js?v=3.3.0.19" type="text/javascript"></script><script src="https://qtanalytics.in/journals/plugins/generic/citationStyleLanguage/js/articleCitation.js?v=3.3.0.19" type="text/javascript"></script><script src="https://qtanalytics.in/journals/plugins/generic/citations/js/citations.js?v=3.3.0.19" type="text/javascript"></script><script src="https://d3js.org/d3.v4.js?v=3.3.0.19" type="text/javascript"></script><script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js?v=3.3.0.19" type="text/javascript"></script><script type="text/javascript">
+(function (w, d, s, l, i) { w[l] = w[l] || []; var f = d.getElementsByTagName(s)[0],
+j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; 
+j.src = 'https://www.googletagmanager.com/gtag/js?id=' + i + dl; f.parentNode.insertBefore(j, f); 
+function gtag(){dataLayer.push(arguments)}; gtag('js', new Date()); gtag('config', i); })
+(window, document, 'script', 'dataLayer', 'G-FL3R91GDMG');
+</script>
+
+
+</body>
+</html>

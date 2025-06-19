@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: samrah
+Version: 0.1.0
+Summary: An awesome package that does amazing things.
+Author-email: Nadun Udaraka <nadunudaraka@gmail.com>
+License: MIT
+Description-Content-Type: text/markdown
+Requires-Dist: beautifulsoup4>=4.13.4
+Requires-Dist: cloudscraper>=1.2.71
+Requires-Dist: httpx[http2]
+Requires-Dist: lxml>=5.4.0
+Requires-Dist: pandas>=2.3.0
