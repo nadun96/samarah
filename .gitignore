@@ -1,2 +1,4 @@
 ./venv
 *.pdf
+ijerr_scraper.log
+IJERR_Vol47_2025_articles.csv
