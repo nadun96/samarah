@@ -49,7 +49,7 @@ def sanitize_filename(text, max_length=50):
     return sanitized[:max_length].strip("_")
 
 
-def random_delay(min_seconds=5, max_seconds=12):
+def random_delay(min_seconds=5, max_seconds=15):
     """Apply random delay between requests."""
     import random
 
@@ -130,7 +130,7 @@ class IJERRScraper:
         article = {
             "title": "N/A",
             "authors": "N/A",
-            "pages": "N/A",
+            "pages": "N/A",  # This will be updated from PDF if found
             "article_url": "N/A",
             "pdf_url": "N/A",
             "doi": "N/A",
@@ -151,7 +151,7 @@ class IJERRScraper:
         if authors_div:
             article["authors"] = authors_div.get_text(strip=True)
 
-        # Extract pages
+        # Extract pages from HTML (as a fallback, will be overwritten by PDF if successful)
         pages_div = article_div.find("div", class_="pages")
         if pages_div:
             article["pages"] = pages_div.get_text(strip=True)
@@ -185,9 +185,15 @@ class IJERRScraper:
             return "N/A"
 
     def download_pdf(self, pdf_url, doi, output_dir="pdfs"):
-        """Download PDF file."""
+        """
+        Download PDF file.
+
+        Returns:
+            str or None: The path to the downloaded PDF file on success, None on failure.
+        """
         if pdf_url == "N/A" or doi == "N/A":
-            return False
+            self.logger.warning("Skipping PDF download due to missing URL or DOI.")
+            return None
 
         try:
             os.makedirs(output_dir, exist_ok=True)
@@ -200,7 +206,7 @@ class IJERRScraper:
             filename = f"{safe_doi}.pdf"
             filepath = os.path.join(output_dir, filename)
 
-            self.logger.info(f"Downloading PDF: {download_url}")
+            self.logger.info(f"Attempting to download PDF: {download_url}")
 
             response = self.session.get(download_url, stream=True)
             response.raise_for_status()
@@ -211,15 +217,65 @@ class IJERRScraper:
                     for chunk in response.iter_content(chunk_size=8192):
                         pdf_file.write(chunk)
 
-                self.logger.info(f"PDF downloaded: {filepath}")
-                return True
+                self.logger.info(f"PDF downloaded successfully: {filepath}")
+                return filepath
             else:
-                self.logger.warning(f"URL did not return PDF content: {download_url}")
-                return False
+                self.logger.warning(
+                    f"URL did not return PDF content (Content-Type: {content_type}): {download_url}"
+                )
+                return None
 
         except Exception as e:
-            self.logger.error(f"Failed to download PDF: {str(e)}")
-            return False
+            self.logger.error(f"Failed to download PDF from {download_url}: {str(e)}")
+            return None
+
+    def extract_data_from_pdf(self, pdf_path):
+        """
+        Opens a PDF file, extracts all text, and searches for a specific 'XX-XX' pattern.
+
+        Args:
+            pdf_path (str): The path to the PDF file.
+
+        Returns:
+            list: A list of all occurrences of the "XX-XX" pattern found,
+                  or an empty list if none are found or an error occurs.
+        """
+        extracted_text = ""
+        try:
+            with open(pdf_path, "rb") as file:
+                reader = PyPDF2.PdfReader(file)
+                # Iterate through each page and extract text
+                for page_num in range(len(reader.pages)):
+                    page = reader.pages[page_num]
+                    # Handle potential AttributeError if extract_text() returns None for a page
+                    page_text = page.extract_text()
+                    if page_text:
+                        extracted_text += page_text
+            self.logger.info(f"Successfully extracted text from {pdf_path}")
+        except FileNotFoundError:
+            self.logger.error(f"Error: PDF file not found at {pdf_path}")
+            return []
+        except PyPDF2.errors.PdfReadError as e:
+            self.logger.error(f"Error reading PDF (corrupt or encrypted?): {e}")
+            return []
+        except Exception as e:
+            self.logger.error(
+                f"An unexpected error occurred while reading the PDF: {e}"
+            )
+            return []
+
+        # Define the regex pattern to find "XX-XX" where X is a digit
+        pattern = r"\b\d{2}-\d{2}\b"
+        matches = re.findall(pattern, extracted_text)
+
+        if matches:
+            self.logger.info(f"Found matches for 'XX-XX' in PDF: {matches}")
+        else:
+            self.logger.info(
+                f"No 'XX-XX' pattern found in the PDF text for {pdf_path}."
+            )
+
+        return matches
 
     def scrape_current_issue(self, download_pdfs=True, save_html=False):
         """Main method to scrape current issue articles."""
@@ -309,7 +365,7 @@ class IJERRScraper:
                         filename = f"article_{article_id}_{safe_title}.html"
                         self.save_html(article_html, filename)
 
-            # Download PDF if requested
+            # Download PDF if requested and update 'pages' from PDF content
             if (
                 download_pdfs
                 and article["pdf_url"] != "N/A"
@@ -317,7 +373,24 @@ class IJERRScraper:
             ):
                 delay = random_delay()
                 self.logger.info(f"Applied delay: {delay:.2f} seconds")
-                self.download_pdf(article["pdf_url"], article["doi"])
+
+                downloaded_filepath = self.download_pdf(
+                    article["pdf_url"], article["doi"]
+                )
+
+                if downloaded_filepath:
+                    # Extract page range (XX-XX) from the downloaded PDF
+                    pdf_page_matches = self.extract_data_from_pdf(downloaded_filepath)
+                    if pdf_page_matches:
+                        # Prioritize PDF extracted page range if found
+                        article["pages"] = pdf_page_matches[0]
+                        self.logger.info(
+                            f"Updated pages for '{article['title']}' to: {article['pages']} (from PDF)"
+                        )
+                    else:
+                        self.logger.info(
+                            f"No 'XX-XX' pattern found in PDF for '{article['title']}', retaining HTML extracted pages: {article['pages']}"
+                        )
 
             self.articles_data.append(article)
 
@@ -375,37 +448,10 @@ class IJERRScraper:
             self.logger.error(f"Failed to save JSON: {str(e)}")
             return ""
 
-    def extract_data_from_pdf(pdf_path):
-        extracted_text = ""
-        try:
-            with open(pdf_path, "rb") as file:
-                reader = PyPDF2.PdfReader(file)
-                # Iterate through each page and extract text
-                for page_num in range(len(reader.pages)):
-                    page = reader.pages[page_num]
-                    extracted_text += page.extract_text()
-        except FileNotFoundError:
-            print(f"Error: PDF file not found at {pdf_path}")
-            return []
-        except Exception as e:
-            print(f"An error occurred while reading the PDF: {e}")
-            return []
-
-        pattern = r"\b\d{2}-\d{2}\b"
-        matches = re.findall(pattern, extracted_text)
-
-        if matches:
-            print(f"Found matches for 'XX-XX': {matches}")
-        else:
-            print("No 'XX-XX' pattern found in the PDF text.")
-
-        return matches
-
 
 def main():
     """Main execution function."""
-    # Initialize scraper with maximum article limit
-    scraper = IJERRScraper(max_articles=None)  # Limit to 5 articles for example
+    scraper = IJERRScraper(max_articles=None)
 
     # Scrape current issue
     articles = scraper.scrape_current_issue(
@@ -414,13 +460,9 @@ def main():
     )
 
     if articles:
-        # Save to CSV using pandas
         csv_filename = scraper.save_to_csv()
-
-        # Save summary as JSON
         json_filename = scraper.save_summary_json()
 
-        # Print summary
         summary = scraper.get_summary()
         print(f"\n{'=' * 50}")
         print("SCRAPING SUMMARY")

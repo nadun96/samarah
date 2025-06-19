@@ -4,7 +4,7 @@
   "total_articles": 16,
   "articles_with_doi": 16,
   "articles_with_pdf": 16,
-  "scrape_timestamp": "2025-06-19T17:03:39.459661",
+  "scrape_timestamp": "2025-06-19T17:30:18.156328",
   "articles": [
     {
       "title": "Designing PIGSAFE: Pig Industry Geographic Surveillance and Assessment for Fever Emergencies Against African Swine Fever",
@@ -79,7 +79,7 @@
     {
       "title": "Enhancing Cassava Disease Detection: Leveraging Deep Convolutional Neural Networks and Data Augmentation for Accurate Diagnosis",
       "authors": "Poonam Chaudhary, Monika Lamba, Sneha Kandacharam",
-      "pages": "93-107",
+      "pages": "68-84",
       "article_url": "https://qtanalytics.in/journals/index.php/IJERR/article/view/4438",
       "pdf_url": "https://qtanalytics.in/journals/index.php/IJERR/article/view/4438/2517",
       "doi": "10.52756/ijerr.2025.v47.008",
@@ -89,7 +89,7 @@
     {
       "title": "Spatial Arrangement in Pearl Millet-groundnut Intercropping System Influences Productivity, Competition and Economics",
       "authors": "G. Shanthi Priya, Sagar Maitra, Masina Sairam, Sumit Ray",
-      "pages": "108-119",
+      "pages": "30-30",
       "article_url": "https://qtanalytics.in/journals/index.php/IJERR/article/view/5012",
       "pdf_url": "https://qtanalytics.in/journals/index.php/IJERR/article/view/5012/2519",
       "doi": "10.52756/ijerr.2025.v47.009",
@@ -99,7 +99,7 @@
     {
       "title": "Recent Advances in Metal-based Drugs in Cancer Therapy",
       "authors": "Afzal Hussain Sheikh, Sourav Nath, Arijit Das, Nurul Alam Choudhury, Suman Adhikari",
-      "pages": "120-132",
+      "pages": "36-67",
       "article_url": "https://qtanalytics.in/journals/index.php/IJERR/article/view/5025",
       "pdf_url": "https://qtanalytics.in/journals/index.php/IJERR/article/view/5025/2521",
       "doi": "10.52756/ijerr.2025.v47.010",
@@ -109,7 +109,7 @@
     {
       "title": "Efficient Utilization of Energy in IoT Devices Using Machine Learning Algorithms",
       "authors": "Kumar Saurabh, Manish Madhava Tripathi, Satyasundara Mahapatra",
-      "pages": "133-145",
+      "pages": "01-10",
       "article_url": "https://qtanalytics.in/journals/index.php/IJERR/article/view/4332",
       "pdf_url": "https://qtanalytics.in/journals/index.php/IJERR/article/view/4332/2523",
       "doi": "10.52756/ijerr.2025.v47.011",
@@ -119,7 +119,7 @@
     {
       "title": "Leveraging Deep Pre-trained Networks for Advanced Skin Lesion Classification for Human Monkeypox Detection",
       "authors": "Madhur Nagrath, Poonam Chaudhary, Meghna Sharma",
-      "pages": "146-158",
+      "pages": "30-40",
       "article_url": "https://qtanalytics.in/journals/index.php/IJERR/article/view/4439",
       "pdf_url": "https://qtanalytics.in/journals/index.php/IJERR/article/view/4439/2525",
       "doi": "10.52756/ijerr.2025.v47.012",
@@ -129,7 +129,7 @@
     {
       "title": "Experimental Investigation on Wear Behavior of Epoxy-TiO2 Composite Coatings via Taguchi Technique",
       "authors": "Imran M Quraishi, Sanjay B Chikalthankar",
-      "pages": "159-166",
+      "pages": "10-20",
       "article_url": "https://qtanalytics.in/journals/index.php/IJERR/article/view/5037",
       "pdf_url": "https://qtanalytics.in/journals/index.php/IJERR/article/view/5037/2527",
       "doi": "10.52756/ijerr.2025.v47.013",
