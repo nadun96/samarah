@@ -5,8 +5,8 @@ import os
 from lxml import html
 import re
 import unicodedata
-import time  # Import the time module
-import random  # Import the random module
+import time
+import random
 
 
 class IJERRScraper:
@@ -15,8 +15,8 @@ class IJERRScraper:
         self.scraper = cloudscraper.create_scraper()
         self.home_page_html = None
         self.current_issue_html = None
-        self.sleep_min = 2  # Minimum sleep duration in seconds
-        self.sleep_max = 5  # Maximum sleep duration in seconds
+        self.sleep_min = 2
+        self.sleep_max = 5
         print(f"IJERRScraper initialized for base URL: {self.base_url}")
 
     def _apply_random_delay(self):
@@ -198,7 +198,7 @@ class IJERRScraper:
         )
         if article_html:
             self._save_content(article_html, full_path)
-            self._apply_random_delay()  # Apply delay after each article page download
+            self._apply_random_delay()
             return True, article_html
         return False, None
 
@@ -248,6 +248,47 @@ class IJERRScraper:
             print(f"An error occurred during DOI extraction: {e}")
             return "N/A"
 
+    def download_pdf_from_article(
+        self, pdf_url: str, doi: str, output_dir="articles_pdf"
+    ) -> bool:
+        if not pdf_url or not doi:
+            print("PDF URL or DOI is missing. Cannot download PDF.")
+            return False
+
+        # Transform 'view' URL to 'download' URL
+        # This is the key change to get the direct PDF download link
+        actual_download_url = pdf_url.replace("/view/", "/download/")
+
+        # Sanitize DOI to be a valid filename
+        sanitized_doi = re.sub(r'[\\/*?:"<>|]', "", doi).replace("/", "-")
+        pdf_filename = f"{sanitized_doi}.pdf"
+        full_path = os.path.join(output_dir, pdf_filename)
+
+        os.makedirs(output_dir, exist_ok=True)
+
+        print(f"Attempting to download PDF from: {actual_download_url}")
+        try:
+            response = self.scraper.get(actual_download_url, stream=True)
+            response.raise_for_status()
+
+            if "application/pdf" in response.headers.get("Content-Type", ""):
+                with open(full_path, "wb") as pdf_file:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        pdf_file.write(chunk)
+                print(f"Successfully downloaded PDF to '{full_path}'")
+                self._apply_random_delay()  # Ensure random delay is applied after download
+                return True
+            else:
+                print(
+                    f"URL did not return a PDF. Content-Type: {response.headers.get('Content-Type')}"
+                )
+                return False
+        except Exception as e:
+            print(
+                f"An error occurred while downloading PDF from {actual_download_url}: {e}"
+            )
+            return False
+
 
 if __name__ == "__main__":
     scraper = IJERRScraper()
@@ -268,32 +309,56 @@ if __name__ == "__main__":
             print(f"\nNumber of articles found: {len(articles)}")
 
             for i, article in enumerate(articles):
-                if i > 2:  # Limit to first 3 articles for demonstration
+                if i > 2:
+                    print("Limiting to first 3 articles for demonstration.")
                     break
                 print(
-                    f"\nAttempting to download Article {i + 1}: {article.get('title', 'N/A')}"
+                    f"\n--- Processing Article {i + 1}: {article.get('title', 'N/A')} ---"
                 )
                 download_success, article_page_html = scraper.download_article_page(
                     article
                 )
 
                 if download_success:
-                    print(f"Successfully downloaded article {i + 1} page.")
+                    print(f"Successfully downloaded article {i + 1} page HTML.")
 
-                    # Extract title from the downloaded page's HTML
                     extracted_title = scraper.extract_article_title_from_page(
                         article_page_html
                     )
-                    if extracted_title != "N/A":
-                        print(f"  Confirmed Title: {extracted_title}")
+                    # No need to print again if already printed by method, but keep the assignment
+                    # if extracted_title != "N/A":
+                    #     print(f"  Confirmed Title: {extracted_title}")
 
-                    # Extract DOI from the downloaded article page
                     extracted_doi = scraper.extract_doi_from_page(article_page_html)
-                    if extracted_doi != "N/A":
-                        print(f"  Extracted DOI: {extracted_doi}")
+                    # No need to print again if already printed by method
+                    # if extracted_doi != "N/A":
+                    #     print(f"  Extracted DOI: {extracted_doi}")
+
+                    # Attempt to download PDF if pdf_url and DOI are available
+                    pdf_url = article.get("pdf_url")
+                    if pdf_url != "N/A" and extracted_doi != "N/A":
+                        print(f"  PDF URL found: {pdf_url}")
+                        if pdf_url is not None and extracted_doi is not None:
+                            pdf_download_success = scraper.download_pdf_from_article(
+                                pdf_url, extracted_doi
+                            )
+                            if pdf_download_success:
+                                print(
+                                    f"  PDF for DOI '{extracted_doi}' downloaded successfully."
+                                )
+                            else:
+                                print(
+                                    f"  Failed to download PDF for DOI '{extracted_doi}'."
+                                )
+                        else:
+                            print("  PDF URL or DOI is None, cannot download.")
+                    else:
+                        print(
+                            f"  PDF URL or DOI not available for PDF download (PDF URL: {pdf_url}, DOI: {extracted_doi})."
+                        )
 
                 else:
-                    print(f"Failed to download article {i + 1} page.")
+                    print(f"Failed to download article {i + 1} page HTML.")
 
         else:
             print("Failed to load current issue page.")
