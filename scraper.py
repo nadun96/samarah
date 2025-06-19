@@ -1,14 +1,65 @@
-import cloudscraper
-from bs4 import BeautifulSoup
-import pandas as pd
 import os
-import re
-import unicodedata
+import csv
 import time
-import random
-import logging
-from typing import Dict, List, Tuple, Optional
-from urllib.parse import urljoin
+import requests
+import cloudscraper
+from datetime import datetime
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin, quote
+import json
+import pandas as pd
+import re
+
+
+class Logger:
+    """Simple logger implementation using only standard libraries."""
+
+    def __init__(self, name, log_file="ijerr_scraper.log"):
+        self.name = name
+        self.log_file = log_file
+
+    def _write_log(self, level, message):
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_entry = f"{timestamp} - {self.name} - {level} - {message}"
+
+        # Print to console
+        print(log_entry)
+
+        # Write to file
+        try:
+            with open(self.log_file, "a", encoding="utf-8") as f:
+                f.write(log_entry + "\n")
+        except Exception:
+            pass  # Fail silently if can't write to log file
+
+    def info(self, message):
+        self._write_log("INFO", message)
+
+    def warning(self, message):
+        self._write_log("WARNING", message)
+
+    def error(self, message):
+        self._write_log("ERROR", message)
+
+
+def sanitize_filename(text, max_length=50):
+    """Sanitize text for use as filename."""
+    # Remove non-ASCII characters and replace with underscore
+    sanitized = re.sub(r"[^\x00-\x7F]+", "_", text)
+    # Replace problematic characters
+    sanitized = re.sub(r'[<>:"/\\|?*]', "_", sanitized)
+    # Remove multiple underscores
+    sanitized = re.sub(r"_+", "_", sanitized)
+    return sanitized[:max_length].strip("_")
+
+
+def random_delay(min_seconds=5, max_seconds=12):
+    """Apply random delay between requests."""
+    import random
+
+    delay = random.uniform(min_seconds, max_seconds)
+    time.sleep(delay)
+    return delay
 
 
 class IJERRScraper:
@@ -16,76 +67,43 @@ class IJERRScraper:
 
     def __init__(
         self,
-        base_url: str = "https://qtanalytics.in/journals/index.php/IJERR/home",
-        max_articles: int = None,
+        base_url="https://qtanalytics.in/journals/index.php/IJERR/home",
+        max_articles=None,
     ):
         self.base_url = base_url
-        self.scraper = cloudscraper.create_scraper()
+        self.session = cloudscraper.create_scraper()
         self.volume = "N/A"
         self.year = "N/A"
         self.articles_data = []
         self.max_articles = max_articles
-
-        # Setup logging
-        self._setup_logging()
-
-        # Rate limiting
-        self.sleep_range = (5, 10)
+        self.logger = Logger(self.__class__.__name__)
 
         self.logger.info(f"IJERRScraper initialized for: {self.base_url}")
         if max_articles:
             self.logger.info(f"Limiting scraping to maximum {max_articles} articles")
 
-    def _setup_logging(self) -> None:
-        """Configure logging for the scraper."""
-        logging.basicConfig(
-            level=logging.INFO,
-            format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-            handlers=[
-                logging.FileHandler("ijerr_scraper.log"),
-                logging.StreamHandler(),
-            ],
-        )
-        self.logger = logging.getLogger(self.__class__.__name__)
-
-    def _random_delay(self) -> None:
-        """Apply random delay to simulate human behavior."""
-        delay = random.uniform(*self.sleep_range)
-        self.logger.info(f"Pausing for {delay:.2f} seconds...")
-        time.sleep(delay)
-
-    def _fetch_page(self, url: str, description: str = "page") -> Optional[str]:
+    def fetch_page(self, url, description="page"):
         """Fetch a web page and return its HTML content."""
         self.logger.info(f"Fetching {description}: {url}")
         try:
-            response = self.scraper.get(url)
+            response = self.session.get(url)
             response.raise_for_status()
             self.logger.info(f"{description.capitalize()} fetched successfully")
             return response.text
         except Exception as e:
-            self.logger.error(f"Failed to fetch {description} from {url}: {e}")
+            self.logger.error(f"Failed to fetch {description} from {url}: {str(e)}")
             return None
 
-    def _save_html(self, content: str, filename: str) -> None:
+    def save_html(self, content, filename):
         """Save HTML content to file."""
         try:
             with open(filename, "w", encoding="utf-8") as file:
                 file.write(content)
             self.logger.info(f"HTML saved to '{filename}'")
         except Exception as e:
-            self.logger.error(f"Failed to save HTML to '{filename}': {e}")
+            self.logger.error(f"Failed to save HTML to '{filename}': {str(e)}")
 
-    def _sanitize_filename(self, text: str, max_length: int = 50) -> str:
-        """Sanitize text for use as filename."""
-        normalized = (
-            unicodedata.normalize("NFKD", text)
-            .encode("ascii", "ignore")
-            .decode("utf-8")
-        )
-        sanitized = re.sub(r"[^a-zA-Z0-9_\-.]", "_", normalized)
-        return sanitized[:max_length].strip("_")
-
-    def _extract_volume_year(self, html_content: str) -> Tuple[str, str]:
+    def extract_volume_year(self, html_content):
         """Extract volume and year from current issue page."""
         try:
             soup = BeautifulSoup(html_content, "html.parser")
@@ -108,10 +126,10 @@ class IJERRScraper:
             return volume, year
 
         except Exception as e:
-            self.logger.error(f"Error extracting volume/year: {e}")
+            self.logger.error(f"Error extracting volume/year: {str(e)}")
             return "N/A", "N/A"
 
-    def _parse_article_summary(self, article_div) -> Dict[str, str]:
+    def parse_article_summary(self, article_div):
         """Parse individual article summary div."""
         article = {
             "title": "N/A",
@@ -149,7 +167,7 @@ class IJERRScraper:
 
         return article
 
-    def _extract_doi_from_article_page(self, html_content: str) -> str:
+    def extract_doi_from_article_page(self, html_content):
         """Extract DOI from individual article page."""
         try:
             soup = BeautifulSoup(html_content, "html.parser")
@@ -167,10 +185,10 @@ class IJERRScraper:
             return "N/A"
 
         except Exception as e:
-            self.logger.error(f"Error extracting DOI: {e}")
+            self.logger.error(f"Error extracting DOI: {str(e)}")
             return "N/A"
 
-    def _download_pdf(self, pdf_url: str, doi: str, output_dir: str = "pdfs") -> bool:
+    def download_pdf(self, pdf_url, doi, output_dir="pdfs"):
         """Download PDF file."""
         if pdf_url == "N/A" or doi == "N/A":
             return False
@@ -182,16 +200,17 @@ class IJERRScraper:
             download_url = pdf_url.replace("/view/", "/download/")
 
             # Create safe filename
-            safe_doi = re.sub(r'[\\/*?:"<>|]', "_", doi)
+            safe_doi = sanitize_filename(doi)
             filename = f"{safe_doi}.pdf"
             filepath = os.path.join(output_dir, filename)
 
             self.logger.info(f"Downloading PDF: {download_url}")
 
-            response = self.scraper.get(download_url, stream=True)
+            response = self.session.get(download_url, stream=True)
             response.raise_for_status()
 
-            if "application/pdf" in response.headers.get("Content-Type", ""):
+            content_type = response.headers.get("Content-Type", "")
+            if "application/pdf" in content_type:
                 with open(filepath, "wb") as pdf_file:
                     for chunk in response.iter_content(chunk_size=8192):
                         pdf_file.write(chunk)
@@ -203,22 +222,20 @@ class IJERRScraper:
                 return False
 
         except Exception as e:
-            self.logger.error(f"Failed to download PDF: {e}")
+            self.logger.error(f"Failed to download PDF: {str(e)}")
             return False
 
-    def scrape_current_issue(
-        self, download_pdfs: bool = True, save_html: bool = False
-    ) -> List[Dict[str, str]]:
+    def scrape_current_issue(self, download_pdfs=True, save_html=False):
         """Main method to scrape current issue articles."""
         self.logger.info("Starting scrape of current issue")
 
         # Load home page
-        home_html = self._fetch_page(self.base_url, "home page")
+        home_html = self.fetch_page(self.base_url, "home page")
         if not home_html:
             return []
 
         if save_html:
-            self._save_html(home_html, "home_page.html")
+            self.save_html(home_html, "home_page.html")
 
         # Find current issue URL
         soup = BeautifulSoup(home_html, "html.parser")
@@ -233,18 +250,19 @@ class IJERRScraper:
         current_issue_url = current_link["href"]
         self.logger.info(f"Found current issue URL: {current_issue_url}")
 
-        self._random_delay()
+        delay = random_delay()
+        self.logger.info(f"Applied delay: {delay:.2f} seconds")
 
         # Load current issue page
-        current_issue_html = self._fetch_page(current_issue_url, "current issue page")
+        current_issue_html = self.fetch_page(current_issue_url, "current issue page")
         if not current_issue_html:
             return []
 
         if save_html:
-            self._save_html(current_issue_html, "current_issue.html")
+            self.save_html(current_issue_html, "current_issue.html")
 
         # Extract volume and year
-        self.volume, self.year = self._extract_volume_year(current_issue_html)
+        self.volume, self.year = self.extract_volume_year(current_issue_html)
 
         # Parse articles
         soup = BeautifulSoup(current_issue_html, "html.parser")
@@ -268,28 +286,32 @@ class IJERRScraper:
         for i, article_div in enumerate(articles_to_process, 1):
             self.logger.info(f"Processing article {i}/{len(articles_to_process)}")
 
-            article = self._parse_article_summary(article_div)
+            article = self.parse_article_summary(article_div)
 
             # Get DOI from article page
             if article["article_url"] != "N/A":
-                self._random_delay()
-                article_html = self._fetch_page(
+                delay = random_delay()
+                self.logger.info(f"Applied delay: {delay:.2f} seconds")
+
+                article_html = self.fetch_page(
                     article["article_url"], f"article {i} page"
                 )
 
                 if article_html:
-                    article["doi"] = self._extract_doi_from_article_page(article_html)
+                    article["doi"] = self.extract_doi_from_article_page(article_html)
 
                     if save_html:
-                        article_id = re.search(
+                        article_id_match = re.search(
                             r"/article/view/(\d+)", article["article_url"]
                         )
                         article_id = (
-                            article_id.group(1) if article_id else f"article_{i}"
+                            article_id_match.group(1)
+                            if article_id_match
+                            else f"article_{i}"
                         )
-                        safe_title = self._sanitize_filename(article["title"])
+                        safe_title = sanitize_filename(article["title"])
                         filename = f"article_{article_id}_{safe_title}.html"
-                        self._save_html(article_html, filename)
+                        self.save_html(article_html, filename)
 
             # Download PDF if requested
             if (
@@ -297,15 +319,16 @@ class IJERRScraper:
                 and article["pdf_url"] != "N/A"
                 and article["doi"] != "N/A"
             ):
-                self._random_delay()
-                self._download_pdf(article["pdf_url"], article["doi"])
+                delay = random_delay()
+                self.logger.info(f"Applied delay: {delay:.2f} seconds")
+                self.download_pdf(article["pdf_url"], article["doi"])
 
             self.articles_data.append(article)
 
         self.logger.info(f"Completed scraping {len(self.articles_data)} articles")
         return self.articles_data
 
-    def save_to_csv(self, filename: Optional[str] = None) -> str:
+    def save_to_csv(self, filename=None):
         """Save scraped data to CSV file."""
         if not self.articles_data:
             self.logger.warning("No data to save")
@@ -320,10 +343,43 @@ class IJERRScraper:
             self.logger.info(f"Data saved to CSV: {filename}")
             return filename
         except Exception as e:
-            self.logger.error(f"Failed to save CSV: {e}")
+            self.logger.error(f"Failed to save CSV: {str(e)}")
             return ""
 
-    def get_summary(self) -> Dict[str, any]:
+    def save_to_csv_manual(self, filename=None):
+        """Save scraped data to CSV file using csv module."""
+        if not self.articles_data:
+            self.logger.warning("No data to save")
+            return ""
+
+        if filename is None:
+            filename = f"IJERR_Vol{self.volume}_{self.year}_articles.csv"
+
+        try:
+            fieldnames = [
+                "title",
+                "authors",
+                "pages",
+                "article_url",
+                "pdf_url",
+                "doi",
+                "volume",
+                "year",
+            ]
+
+            with open(filename, "w", newline="", encoding="utf-8") as csvfile:
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                writer.writeheader()
+                for article in self.articles_data:
+                    writer.writerow(article)
+
+            self.logger.info(f"Data saved to CSV: {filename}")
+            return filename
+        except Exception as e:
+            self.logger.error(f"Failed to save CSV: {str(e)}")
+            return ""
+
+    def get_summary(self):
         """Get summary of scraped data."""
         return {
             "volume": self.volume,
@@ -337,11 +393,30 @@ class IJERRScraper:
             ),
         }
 
+    def save_summary_json(self, filename=None):
+        """Save summary to JSON file."""
+        if filename is None:
+            filename = f"IJERR_Vol{self.volume}_{self.year}_summary.json"
+
+        try:
+            summary = self.get_summary()
+            summary["scrape_timestamp"] = datetime.now().isoformat()
+            summary["articles"] = self.articles_data
+
+            with open(filename, "w", encoding="utf-8") as f:
+                json.dump(summary, f, indent=2, ensure_ascii=False)
+
+            self.logger.info(f"Summary saved to JSON: {filename}")
+            return filename
+        except Exception as e:
+            self.logger.error(f"Failed to save JSON: {str(e)}")
+            return ""
+
 
 def main():
     """Main execution function."""
     # Initialize scraper with maximum article limit
-    scraper = IJERRScraper(max_articles=3)  # Limit to 5 articles for example
+    scraper = IJERRScraper(max_articles=2)  # Limit to 5 articles for example
 
     # Scrape current issue
     articles = scraper.scrape_current_issue(
@@ -350,8 +425,14 @@ def main():
     )
 
     if articles:
-        # Save to CSV
+        # Save to CSV using pandas
         csv_filename = scraper.save_to_csv()
+
+        # Alternative: Save to CSV using csv module (if pandas unavailable)
+        # csv_filename = scraper.save_to_csv_manual()
+
+        # Save summary as JSON
+        json_filename = scraper.save_summary_json()
 
         # Print summary
         summary = scraper.get_summary()
@@ -364,6 +445,7 @@ def main():
         print(f"Articles with DOI: {summary['articles_with_doi']}")
         print(f"Articles with PDF: {summary['articles_with_pdf']}")
         print(f"CSV File: {csv_filename}")
+        print(f"JSON File: {json_filename}")
         print(f"{'=' * 50}")
     else:
         print("No articles were scraped.")
