@@ -1,0 +1,7 @@
+README.md
+pyproject.toml
+qtanalytics.egg-info/PKG-INFO
+qtanalytics.egg-info/SOURCES.txt
+qtanalytics.egg-info/dependency_links.txt
+qtanalytics.egg-info/requires.txt
+qtanalytics.egg-info/top_level.txt

@@ -1,12 +1,20 @@
 [project]
-name = "samrah"
-dynamic = ["version" , "dependencies"] 
-description = "An awesome package that does amazing things."
+name = "qtanalytics"
+version = "0.1.0"
+description = "qtanalytics webscraper latest issue."
 readme = "README.md"
 license = { text = "MIT" }
 authors = [
     { name = "Nadun Udaraka", email = "nadunudaraka@gmail.com" },
 ]
+dependencies = [
+    "beautifulsoup4>=4.13.4",
+    "cloudscraper>=1.2.71",
+    "httpx[http2]",
+    "lxml>=5.4.0",
+    "pandas>=2.3.0",
+]
+
 [build-system]
 requires = ["setuptools>=61.0.0"]
 build-backend = "setuptools.build_meta"
