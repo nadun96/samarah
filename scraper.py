@@ -2,367 +2,344 @@ import cloudscraper
 from bs4 import BeautifulSoup
 import pandas as pd
 import os
-from lxml import html
 import re
 import unicodedata
 import time
 import random
+import logging
+from typing import Dict, List, Tuple, Optional
+from urllib.parse import urljoin
 
 
 class IJERRScraper:
-    def __init__(self, base_url="https://qtanalytics.in/journals/index.php/IJERR/home"):
+    """Scraper for IJERR journal articles with CSV export functionality."""
+    
+    def __init__(self, base_url: str = "https://qtanalytics.in/journals/index.php/IJERR/home", max_articles: int = None):
         self.base_url = base_url
         self.scraper = cloudscraper.create_scraper()
-        self.home_page_html = None
-        self.current_issue_html = None
-        self.sleep_min = 2
-        self.sleep_max = 5
-        print(f"IJERRScraper initialized for base URL: {self.base_url}")
+        self.volume = "N/A"
+        self.year = "N/A"
+        self.articles_data = []
+        self.max_articles = max_articles
+        
+        # Setup logging
+        self._setup_logging()
+        
+        # Rate limiting
+        self.sleep_range = (2, 5)
+        
+        self.logger.info(f"IJERRScraper initialized for: {self.base_url}")
+        if max_articles:
+            self.logger.info(f"Limiting scraping to maximum {max_articles} articles")
 
-    def _apply_random_delay(self):
-        delay = random.uniform(self.sleep_min, self.sleep_max)
-        print(f"Pausing for {delay:.2f} seconds to simulate human behavior...")
+    def _setup_logging(self) -> None:
+        """Configure logging for the scraper."""
+        logging.basicConfig(
+            level=logging.INFO,
+            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+            handlers=[
+                logging.FileHandler('ijerr_scraper.log'),
+                logging.StreamHandler()
+            ]
+        )
+        self.logger = logging.getLogger(self.__class__.__name__)
+
+    def _random_delay(self) -> None:
+        """Apply random delay to simulate human behavior."""
+        delay = random.uniform(*self.sleep_range)
+        self.logger.info(f"Pausing for {delay:.2f} seconds...")
         time.sleep(delay)
 
-    def _make_request(self, url, description="page"):
-        print(f"Attempting to load {description}: {url}")
+    def _fetch_page(self, url: str, description: str = "page") -> Optional[str]:
+        """Fetch a web page and return its HTML content."""
+        self.logger.info(f"Fetching {description}: {url}")
         try:
             response = self.scraper.get(url)
             response.raise_for_status()
-            print(f"{description.capitalize()} loaded successfully.")
+            self.logger.info(f"{description.capitalize()} fetched successfully")
             return response.text
         except Exception as e:
-            print(f"An error occurred while loading {description} from {url}: {e}")
+            self.logger.error(f"Failed to fetch {description} from {url}: {e}")
             return None
 
-    def _save_content(self, content, filename):
-        if content:
-            try:
-                content_to_write = str(content)
-                with open(filename, "w", encoding="utf-8") as file:
-                    file.write(content_to_write)
-                print(f"Content saved to '{filename}'")
-            except Exception as e:
-                print(f"Error saving content to '{filename}': {e}")
-        else:
-            print(f"No content to save for '{filename}'.")
-
-    def load_home_page(self, save_html=True, filename="IJERR_homepage.html"):
-        self.home_page_html = self._make_request(self.base_url, "home page")
-        if save_html and self.home_page_html:
-            self._save_content(self.home_page_html, filename)
-        self._apply_random_delay()
-        return self.home_page_html
-
-    def get_current_issue_url(self):
-        if not self.home_page_html:
-            print("Home page HTML not loaded. Please call load_home_page() first.")
-            return None
-
-        soup = BeautifulSoup(self.home_page_html, "html.parser")
-        current_link_element = soup.select_one(
-            'ul#navigationPrimary li a[href*="/issue/current"]'
-        )
-
-        if current_link_element:
-            current_issue_url = current_link_element["href"]
-            print(f"Found 'Current' issue link: {current_issue_url}")
-            return current_issue_url
-        else:
-            print("Could not find the 'Current' issue link on the home page.")
-            return None
-
-    def load_current_issue_page(
-        self, save_html=True, filename="IJERR_current_issue.html"
-    ):
-        current_issue_url = self.get_current_issue_url()
-        if current_issue_url:
-            self.current_issue_html = self._make_request(
-                current_issue_url, "Current issue page"
-            )
-            if save_html and self.current_issue_html:
-                self._save_content(self.current_issue_html, filename)
-            self._apply_random_delay()
-            return self.current_issue_html
-        return None
-
-    def extract_volume_and_year(self) -> tuple[str, str]:
-        if not self.current_issue_html:
-            print("Current issue HTML not loaded. Cannot extract volume and year.")
-            return "N/A", "N/A"
-
+    def _save_html(self, content: str, filename: str) -> None:
+        """Save HTML content to file."""
         try:
-            tree = html.fromstring(self.current_issue_html)
-            h1_elements = tree.xpath("/html/body/div/div[1]/div[1]/div/h1")
-            if h1_elements:
-                h1_text = h1_elements[0].text_content().strip()
-                print(f"Found h1 text: '{h1_text}'")
+            with open(filename, "w", encoding="utf-8") as file:
+                file.write(content)
+            self.logger.info(f"HTML saved to '{filename}'")
+        except Exception as e:
+            self.logger.error(f"Failed to save HTML to '{filename}': {e}")
 
-                volume_match = re.search(r"Vol\.\s*(\d+)", h1_text, re.IGNORECASE)
-                year_match = re.search(r"\((\d{4})\)", h1_text)
+    def _sanitize_filename(self, text: str, max_length: int = 50) -> str:
+        """Sanitize text for use as filename."""
+        normalized = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode("utf-8")
+        sanitized = re.sub(r"[^a-zA-Z0-9_\-.]", "_", normalized)
+        return sanitized[:max_length].strip("_")
 
-                volume = volume_match.group(1) if volume_match else "N/A"
-                year = year_match.group(1) if year_match else "N/A"
-
-                return volume, year
-            else:
-                print("No <h1> element found at the specified XPath.")
+    def _extract_volume_year(self, html_content: str) -> Tuple[str, str]:
+        """Extract volume and year from current issue page."""
+        try:
+            soup = BeautifulSoup(html_content, "html.parser")
+            h1_element = soup.find("h1")
+            
+            if not h1_element:
+                self.logger.warning("No h1 element found for volume/year extraction")
                 return "N/A", "N/A"
+                
+            h1_text = h1_element.get_text(strip=True)
+            self.logger.info(f"Found h1 text: '{h1_text}'")
+            
+            volume_match = re.search(r"Vol\.\s*(\d+)", h1_text, re.IGNORECASE)
+            year_match = re.search(r"\((\d{4})\)", h1_text)
+            
+            volume = volume_match.group(1) if volume_match else "N/A"
+            year = year_match.group(1) if year_match else "N/A"
+            
+            self.logger.info(f"Extracted - Volume: {volume}, Year: {year}")
+            return volume, year
+            
         except Exception as e:
-            print(f"An error occurred during volume and year extraction: {e}")
+            self.logger.error(f"Error extracting volume/year: {e}")
             return "N/A", "N/A"
 
-    def parse_current_issue_articles(self) -> list[dict]:
-        if not self.current_issue_html:
-            print(
-                "Current issue HTML not loaded. Please call load_current_issue_page() first."
-            )
-            return []
+    def _parse_article_summary(self, article_div) -> Dict[str, str]:
+        """Parse individual article summary div."""
+        article = {
+            'title': 'N/A',
+            'authors': 'N/A',
+            'pages': 'N/A',
+            'article_url': 'N/A',
+            'pdf_url': 'N/A',
+            'doi': 'N/A',
+            'volume': self.volume,
+            'year': self.year
+        }
+        
+        # Extract title and article URL
+        title_element = article_div.find("h3", class_="title")
+        if title_element:
+            title_link = title_element.find("a")
+            if title_link:
+                article['title'] = title_link.get_text(strip=True)
+                article['article_url'] = title_link.get('href', 'N/A')
+        
+        # Extract authors
+        authors_div = article_div.find("div", class_="authors")
+        if authors_div:
+            article['authors'] = authors_div.get_text(strip=True)
+        
+        # Extract pages
+        pages_div = article_div.find("div", class_="pages")
+        if pages_div:
+            article['pages'] = pages_div.get_text(strip=True)
+        
+        # Extract PDF URL
+        pdf_link = article_div.find("a", class_="obj_galley_link pdf")
+        if pdf_link:
+            article['pdf_url'] = pdf_link.get('href', 'N/A')
+        
+        return article
 
-        soup = BeautifulSoup(self.current_issue_html, "html.parser")
-        articles_data = []
-
-        article_summary_divs = soup.find_all("div", class_="obj_article_summary")
-
-        if not article_summary_divs:
-            print("No article summary divs found on the current issue page.")
-            return []
-
-        print(f"Found {len(article_summary_divs)} article summaries.")
-
-        for article_div in article_summary_divs:
-            article = {}
-
-            title_link_element = article_div.find("h3", class_="title").find("a")
-            article["title"] = (
-                title_link_element.get_text(strip=True) if title_link_element else "N/A"
-            )
-            article["article_url"] = (
-                title_link_element["href"]
-                if title_link_element and "href" in title_link_element.attrs
-                else "N/A"
-            )
-
-            authors_div = article_div.find("div", class_="authors")
-            article["authors"] = (
-                authors_div.get_text(strip=True) if authors_div else "N/A"
-            )
-
-            pages_div = article_div.find("div", class_="pages")
-            article["pages"] = pages_div.get_text(strip=True) if pages_div else "N/A"
-
-            pdf_link = article_div.find("a", class_="obj_galley_link pdf")
-            article["pdf_url"] = (
-                pdf_link["href"] if pdf_link and "href" in pdf_link.attrs else "N/A"
-            )
-
-            check_for_updates_link = article_div.find(
-                "a", class_="obj_galley_link file"
-            )
-            article["check_for_updates_url"] = (
-                check_for_updates_link["href"]
-                if check_for_updates_link and "href" in check_for_updates_link.attrs
-                else "N/A"
-            )
-
-            articles_data.append(article)
-
-        return articles_data
-
-    def download_article_page(self, article_data: dict, output_dir="articles_html"):
-        if not "article_url" in article_data or not article_data["article_url"]:
-            print("Article data missing 'article_url'. Cannot download page.")
-            return False, None
-
-        article_url = article_data["article_url"]
-        article_title_for_log = article_data.get("title", "untitled_article")
-
-        filename_base = (
-            unicodedata.normalize("NFKD", article_title_for_log)
-            .encode("ascii", "ignore")
-            .decode("utf-8")
-        )
-        filename_base = re.sub(r"[^a-zA-Z0-9_\-.]", "", filename_base)
-        filename_base = filename_base[:50].strip()
-
-        article_id_match = re.search(r"/article/view/(\d+)", article_url)
-        article_id = article_id_match.group(1) if article_id_match else "unknown_id"
-
-        final_filename = f"article_{article_id}_{filename_base}.html"
-        full_path = os.path.join(output_dir, final_filename)
-
-        os.makedirs(output_dir, exist_ok=True)
-
-        article_html = self._make_request(
-            article_url, f"article page '{article_title_for_log}'"
-        )
-        if article_html:
-            self._save_content(article_html, full_path)
-            self._apply_random_delay()
-            return True, article_html
-        return False, None
-
-    def extract_article_title_from_page(self, article_page_html: str) -> str:
-        if not article_page_html:
-            print("No HTML content provided to extract article title.")
-            return "N/A"
-
+    def _extract_doi_from_article_page(self, html_content: str) -> str:
+        """Extract DOI from individual article page."""
         try:
-            soup = BeautifulSoup(article_page_html, "html.parser")
-            title_h1 = soup.find("h1", class_="page_title")
-
-            if title_h1:
-                title = title_h1.get_text(strip=True)
-                print(f"Extracted article title from page: '{title}'")
-                return title
-            else:
-                print("No <h1 class='page_title'> element found on the article page.")
-                return "N/A"
-        except Exception as e:
-            print(f"An error occurred during article title extraction: {e}")
-            return "N/A"
-
-    def extract_doi_from_page(self, article_page_html: str) -> str:
-        if not article_page_html:
-            print("No HTML content provided to extract DOI.")
-            return "N/A"
-
-        try:
-            soup = BeautifulSoup(article_page_html, "html.parser")
-            doi_link_element = soup.select_one("section.item.doi span.value a")
-
-            if doi_link_element and "href" in doi_link_element.attrs:
-                full_doi_url = doi_link_element["href"]
-                doi_match = re.search(r"https://doi.org/(.*)", full_doi_url)
+            soup = BeautifulSoup(html_content, "html.parser")
+            doi_element = soup.select_one("section.item.doi span.value a")
+            
+            if doi_element and doi_element.get('href'):
+                doi_url = doi_element['href']
+                doi_match = re.search(r"https://doi.org/(.*)", doi_url)
                 if doi_match:
                     doi = doi_match.group(1)
-                    print(f"Extracted DOI: '{doi}'")
+                    self.logger.info(f"Extracted DOI: {doi}")
                     return doi
-                else:
-                    print(f"DOI URL format not as expected: {full_doi_url}")
-                    return "N/A"
-            else:
-                print("DOI link element not found on the article page.")
-                return "N/A"
+            
+            self.logger.warning("DOI not found on article page")
+            return "N/A"
+            
         except Exception as e:
-            print(f"An error occurred during DOI extraction: {e}")
+            self.logger.error(f"Error extracting DOI: {e}")
             return "N/A"
 
-    def download_pdf_from_article(
-        self, pdf_url: str, doi: str, output_dir="articles_pdf"
-    ) -> bool:
-        if not pdf_url or not doi:
-            print("PDF URL or DOI is missing. Cannot download PDF.")
+    def _download_pdf(self, pdf_url: str, doi: str, output_dir: str = "pdfs") -> bool:
+        """Download PDF file."""
+        if pdf_url == "N/A" or doi == "N/A":
             return False
-
-        # Transform 'view' URL to 'download' URL
-        # This is the key change to get the direct PDF download link
-        actual_download_url = pdf_url.replace("/view/", "/download/")
-
-        # Sanitize DOI to be a valid filename
-        sanitized_doi = re.sub(r'[\\/*?:"<>|]', "", doi).replace("/", "-")
-        pdf_filename = f"{sanitized_doi}.pdf"
-        full_path = os.path.join(output_dir, pdf_filename)
-
-        os.makedirs(output_dir, exist_ok=True)
-
-        print(f"Attempting to download PDF from: {actual_download_url}")
+            
         try:
-            response = self.scraper.get(actual_download_url, stream=True)
+            os.makedirs(output_dir, exist_ok=True)
+            
+            # Convert view URL to download URL
+            download_url = pdf_url.replace("/view/", "/download/")
+            
+            # Create safe filename
+            safe_doi = re.sub(r'[\\/*?:"<>|]', "_", doi)
+            filename = f"{safe_doi}.pdf"
+            filepath = os.path.join(output_dir, filename)
+            
+            self.logger.info(f"Downloading PDF: {download_url}")
+            
+            response = self.scraper.get(download_url, stream=True)
             response.raise_for_status()
-
+            
             if "application/pdf" in response.headers.get("Content-Type", ""):
-                with open(full_path, "wb") as pdf_file:
+                with open(filepath, "wb") as pdf_file:
                     for chunk in response.iter_content(chunk_size=8192):
                         pdf_file.write(chunk)
-                print(f"Successfully downloaded PDF to '{full_path}'")
-                self._apply_random_delay()  # Ensure random delay is applied after download
+                
+                self.logger.info(f"PDF downloaded: {filepath}")
                 return True
             else:
-                print(
-                    f"URL did not return a PDF. Content-Type: {response.headers.get('Content-Type')}"
-                )
+                self.logger.warning(f"URL did not return PDF content: {download_url}")
                 return False
+                
         except Exception as e:
-            print(
-                f"An error occurred while downloading PDF from {actual_download_url}: {e}"
-            )
+            self.logger.error(f"Failed to download PDF: {e}")
             return False
+
+    def scrape_current_issue(self, download_pdfs: bool = True, save_html: bool = False) -> List[Dict[str, str]]:
+        """Main method to scrape current issue articles."""
+        self.logger.info("Starting scrape of current issue")
+        
+        # Load home page
+        home_html = self._fetch_page(self.base_url, "home page")
+        if not home_html:
+            return []
+        
+        if save_html:
+            self._save_html(home_html, "home_page.html")
+        
+        # Find current issue URL
+        soup = BeautifulSoup(home_html, "html.parser")
+        current_link = soup.select_one('ul#navigationPrimary li a[href*="/issue/current"]')
+        
+        if not current_link:
+            self.logger.error("Current issue link not found")
+            return []
+        
+        current_issue_url = current_link['href']
+        self.logger.info(f"Found current issue URL: {current_issue_url}")
+        
+        self._random_delay()
+        
+        # Load current issue page
+        current_issue_html = self._fetch_page(current_issue_url, "current issue page")
+        if not current_issue_html:
+            return []
+        
+        if save_html:
+            self._save_html(current_issue_html, "current_issue.html")
+        
+        # Extract volume and year
+        self.volume, self.year = self._extract_volume_year(current_issue_html)
+        
+        # Parse articles
+        soup = BeautifulSoup(current_issue_html, "html.parser")
+        article_divs = soup.find_all("div", class_="obj_article_summary")
+        
+        if not article_divs:
+            self.logger.warning("No articles found")
+            return []
+        
+        # Apply article limit if specified
+        articles_to_process = article_divs
+        if self.max_articles and len(article_divs) > self.max_articles:
+            articles_to_process = article_divs[:self.max_articles]
+            self.logger.info(f"Found {len(article_divs)} articles, limiting to {self.max_articles}")
+        else:
+            self.logger.info(f"Found {len(article_divs)} articles")
+        
+        # Process each article
+        for i, article_div in enumerate(articles_to_process, 1):
+            self.logger.info(f"Processing article {i}/{len(articles_to_process)}")
+            
+            article = self._parse_article_summary(article_div)
+            
+            # Get DOI from article page
+            if article['article_url'] != 'N/A':
+                self._random_delay()
+                article_html = self._fetch_page(article['article_url'], f"article {i} page")
+                
+                if article_html:
+                    article['doi'] = self._extract_doi_from_article_page(article_html)
+                    
+                    if save_html:
+                        article_id = re.search(r"/article/view/(\d+)", article['article_url'])
+                        article_id = article_id.group(1) if article_id else f"article_{i}"
+                        safe_title = self._sanitize_filename(article['title'])
+                        filename = f"article_{article_id}_{safe_title}.html"
+                        self._save_html(article_html, filename)
+            
+            # Download PDF if requested
+            if download_pdfs and article['pdf_url'] != 'N/A' and article['doi'] != 'N/A':
+                self._random_delay()
+                self._download_pdf(article['pdf_url'], article['doi'])
+            
+            self.articles_data.append(article)
+        
+        self.logger.info(f"Completed scraping {len(self.articles_data)} articles")
+        return self.articles_data
+
+    def save_to_csv(self, filename: Optional[str] = None) -> str:
+        """Save scraped data to CSV file."""
+        if not self.articles_data:
+            self.logger.warning("No data to save")
+            return ""
+        
+        if filename is None:
+            filename = f"IJERR_Vol{self.volume}_{self.year}_articles.csv"
+        
+        try:
+            df = pd.DataFrame(self.articles_data)
+            df.to_csv(filename, index=False, encoding='utf-8')
+            self.logger.info(f"Data saved to CSV: {filename}")
+            return filename
+        except Exception as e:
+            self.logger.error(f"Failed to save CSV: {e}")
+            return ""
+
+    def get_summary(self) -> Dict[str, any]:
+        """Get summary of scraped data."""
+        return {
+            'volume': self.volume,
+            'year': self.year,
+            'total_articles': len(self.articles_data),
+            'articles_with_doi': sum(1 for a in self.articles_data if a['doi'] != 'N/A'),
+            'articles_with_pdf': sum(1 for a in self.articles_data if a['pdf_url'] != 'N/A')
+        }
+
+
+def main():
+    """Main execution function."""
+    # Initialize scraper with maximum article limit
+    scraper = IJERRScraper(max_articles=5)  # Limit to 5 articles for example
+    
+    # Scrape current issue
+    articles = scraper.scrape_current_issue(
+        download_pdfs=True,  # Set to False to skip PDF downloads
+        save_html=False      # Set to True to save HTML files
+    )
+    
+    if articles:
+        # Save to CSV
+        csv_filename = scraper.save_to_csv()
+        
+        # Print summary
+        summary = scraper.get_summary()
+        print(f"\n{'='*50}")
+        print("SCRAPING SUMMARY")
+        print(f"{'='*50}")
+        print(f"Volume: {summary['volume']}")
+        print(f"Year: {summary['year']}")
+        print(f"Total Articles: {summary['total_articles']}")
+        print(f"Articles with DOI: {summary['articles_with_doi']}")
+        print(f"Articles with PDF: {summary['articles_with_pdf']}")
+        print(f"CSV File: {csv_filename}")
+        print(f"{'='*50}")
+    else:
+        print("No articles were scraped.")
 
 
 if __name__ == "__main__":
-    scraper = IJERRScraper()
-
-    home_html = scraper.load_home_page()
-
-    if home_html:
-        current_issue_html = scraper.load_current_issue_page()
-
-        if current_issue_html:
-            volume, year = scraper.extract_volume_and_year()
-            if volume and year:
-                print(f"Current Issue Details: Volume {volume}, Year {year}")
-            else:
-                print("Could not extract current volume and year.")
-
-            articles = scraper.parse_current_issue_articles()
-            print(f"\nNumber of articles found: {len(articles)}")
-
-            for i, article in enumerate(articles):
-                if i > 2:
-                    print("Limiting to first 3 articles for demonstration.")
-                    break
-                print(
-                    f"\n--- Processing Article {i + 1}: {article.get('title', 'N/A')} ---"
-                )
-                download_success, article_page_html = scraper.download_article_page(
-                    article
-                )
-
-                if download_success:
-                    print(f"Successfully downloaded article {i + 1} page HTML.")
-
-                    extracted_title = scraper.extract_article_title_from_page(
-                        article_page_html
-                    )
-                    # No need to print again if already printed by method, but keep the assignment
-                    # if extracted_title != "N/A":
-                    #     print(f"  Confirmed Title: {extracted_title}")
-
-                    extracted_doi = scraper.extract_doi_from_page(article_page_html)
-                    # No need to print again if already printed by method
-                    # if extracted_doi != "N/A":
-                    #     print(f"  Extracted DOI: {extracted_doi}")
-
-                    # Attempt to download PDF if pdf_url and DOI are available
-                    pdf_url = article.get("pdf_url")
-                    if pdf_url != "N/A" and extracted_doi != "N/A":
-                        print(f"  PDF URL found: {pdf_url}")
-                        if pdf_url is not None and extracted_doi is not None:
-                            pdf_download_success = scraper.download_pdf_from_article(
-                                pdf_url, extracted_doi
-                            )
-                            if pdf_download_success:
-                                print(
-                                    f"  PDF for DOI '{extracted_doi}' downloaded successfully."
-                                )
-                            else:
-                                print(
-                                    f"  Failed to download PDF for DOI '{extracted_doi}'."
-                                )
-                        else:
-                            print("  PDF URL or DOI is None, cannot download.")
-                    else:
-                        print(
-                            f"  PDF URL or DOI not available for PDF download (PDF URL: {pdf_url}, DOI: {extracted_doi})."
-                        )
-
-                else:
-                    print(f"Failed to download article {i + 1} page HTML.")
-
-        else:
-            print("Failed to load current issue page.")
-    else:
-        print("Failed to load home page.")
-
-    print("\nScraping process complete.")
+    main()
