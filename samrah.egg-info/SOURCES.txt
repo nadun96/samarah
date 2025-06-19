@@ -1,7 +1,0 @@
-README.md
-pyproject.toml
-samrah.egg-info/PKG-INFO
-samrah.egg-info/SOURCES.txt
-samrah.egg-info/dependency_links.txt
-samrah.egg-info/requires.txt
-samrah.egg-info/top_level.txt

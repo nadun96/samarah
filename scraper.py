@@ -1,19 +1,15 @@
 import os
-import csv
 import time
-import requests
+import PyPDF2
 import cloudscraper
 from datetime import datetime
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin, quote
 import json
 import pandas as pd
 import re
 
 
 class Logger:
-    """Simple logger implementation using only standard libraries."""
-
     def __init__(self, name, log_file="ijerr_scraper.log"):
         self.name = name
         self.log_file = log_file
@@ -346,39 +342,6 @@ class IJERRScraper:
             self.logger.error(f"Failed to save CSV: {str(e)}")
             return ""
 
-    def save_to_csv_manual(self, filename=None):
-        """Save scraped data to CSV file using csv module."""
-        if not self.articles_data:
-            self.logger.warning("No data to save")
-            return ""
-
-        if filename is None:
-            filename = f"IJERR_Vol{self.volume}_{self.year}_articles.csv"
-
-        try:
-            fieldnames = [
-                "title",
-                "authors",
-                "pages",
-                "article_url",
-                "pdf_url",
-                "doi",
-                "volume",
-                "year",
-            ]
-
-            with open(filename, "w", newline="", encoding="utf-8") as csvfile:
-                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-                writer.writeheader()
-                for article in self.articles_data:
-                    writer.writerow(article)
-
-            self.logger.info(f"Data saved to CSV: {filename}")
-            return filename
-        except Exception as e:
-            self.logger.error(f"Failed to save CSV: {str(e)}")
-            return ""
-
     def get_summary(self):
         """Get summary of scraped data."""
         return {
@@ -412,11 +375,37 @@ class IJERRScraper:
             self.logger.error(f"Failed to save JSON: {str(e)}")
             return ""
 
+    def extract_data_from_pdf(pdf_path):
+        extracted_text = ""
+        try:
+            with open(pdf_path, "rb") as file:
+                reader = PyPDF2.PdfReader(file)
+                # Iterate through each page and extract text
+                for page_num in range(len(reader.pages)):
+                    page = reader.pages[page_num]
+                    extracted_text += page.extract_text()
+        except FileNotFoundError:
+            print(f"Error: PDF file not found at {pdf_path}")
+            return []
+        except Exception as e:
+            print(f"An error occurred while reading the PDF: {e}")
+            return []
+
+        pattern = r"\b\d{2}-\d{2}\b"
+        matches = re.findall(pattern, extracted_text)
+
+        if matches:
+            print(f"Found matches for 'XX-XX': {matches}")
+        else:
+            print("No 'XX-XX' pattern found in the PDF text.")
+
+        return matches
+
 
 def main():
     """Main execution function."""
     # Initialize scraper with maximum article limit
-    scraper = IJERRScraper(max_articles=2)  # Limit to 5 articles for example
+    scraper = IJERRScraper(max_articles=None)  # Limit to 5 articles for example
 
     # Scrape current issue
     articles = scraper.scrape_current_issue(
@@ -427,9 +416,6 @@ def main():
     if articles:
         # Save to CSV using pandas
         csv_filename = scraper.save_to_csv()
-
-        # Alternative: Save to CSV using csv module (if pandas unavailable)
-        # csv_filename = scraper.save_to_csv_manual()
 
         # Save summary as JSON
         json_filename = scraper.save_summary_json()
